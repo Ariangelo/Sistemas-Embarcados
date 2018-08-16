@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.collections.*?>
+
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLControllerLed">
+    <stylesheets>
+        <URL value="@/styles/Styles.css" />
+    </stylesheets>
+    <children>
+      <VBox spacing="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+              <HBox spacing="20.0">
+                  <children>
+                      <GridPane alignment="CENTER">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                          <children>
+                              <JFXButton fx:id="btnCima" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" defaultButton="true" disable="true" mnemonicParsing="false" onMousePressed="#btnClick" onMouseReleased="#btnUnclick" style="-fx-text-fill:WHITE; -fx-background-color:DODGERBLUE; -fx-font-size: 14px;" GridPane.columnIndex="1">
+                                  <graphic>
+                                      <FontAwesomeIconView fill="WHITE" glyphName="ARROW_CIRCLE_UP" size="3em" />
+                                  </graphic>
+                                  <GridPane.margin>
+                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                  </GridPane.margin>
+                              </JFXButton>
+                              <JFXButton fx:id="btnEsquerda" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" defaultButton="true" mnemonicParsing="false" onMousePressed="#btnClick" onMouseReleased="#btnUnclick" style="-fx-text-fill:WHITE; -fx-background-color:DODGERBLUE; -fx-font-size: 14px;" GridPane.rowIndex="1">
+                                  <graphic>
+                                      <FontAwesomeIconView fill="WHITE" glyphName="ARROW_CIRCLE_LEFT" size="3em" />
+                                  </graphic>
+                                  <GridPane.margin>
+                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                  </GridPane.margin>
+                              </JFXButton>
+                              <JFXButton fx:id="btnDireita" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" defaultButton="true" mnemonicParsing="false" onMousePressed="#btnClick" onMouseReleased="#btnUnclick" style="-fx-text-fill:WHITE; -fx-background-color:DODGERBLUE; -fx-font-size: 14px;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                  <graphic>
+                                      <FontAwesomeIconView fill="WHITE" glyphName="ARROW_CIRCLE_RIGHT" size="3em" />
+                                  </graphic>
+                                  <GridPane.margin>
+                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                  </GridPane.margin>
+                              </JFXButton>
+                              <JFXButton fx:id="btnBaixo" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" defaultButton="true" disable="true" mnemonicParsing="false" onMousePressed="#btnClick" onMouseReleased="#btnUnclick" style="-fx-text-fill:WHITE; -fx-background-color:DODGERBLUE; -fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                  <graphic>
+                                      <FontAwesomeIconView fill="WHITE" glyphName="ARROW_CIRCLE_DOWN" size="3em" />
+                                  </graphic>
+                                  <GridPane.margin>
+                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                  </GridPane.margin>
+                              </JFXButton>
+                              <JFXButton fx:id="btnHome" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" defaultButton="true" mnemonicParsing="false" onMousePressed="#btnClick" style="-fx-text-fill:WHITE; -fx-background-color:DODGERBLUE; -fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                  <graphic>
+                                      <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="3em" />
+                                  </graphic>
+                                  <GridPane.margin>
+                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                  </GridPane.margin>
+                              </JFXButton>
+                          </children>
+                      </GridPane>
+                      <VBox alignment="CENTER" spacing="10.0" />
+                  </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+              </HBox>
+            <ToolBar>
+               <items>
+                  <JFXComboBox fx:id="cmbPortas" promptText="Porta" />
+                  <JFXToggleButton fx:id="btnConectar" size="4.0" text="Conectar" />
+                  <Separator orientation="VERTICAL" />
+               </items>
+            </ToolBar>
+         </children>
+      </VBox>
+    </children>
+</AnchorPane>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mycompany</groupId>
+    <artifactId>UART-Bluetooth</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>UART-Bluetooth</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mainClass>com.mycompany.uart.bluetooth.MainApp</mainClass>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <organization>
+        <!-- Used as the 'Vendor' for JNLP generation -->
+        <name>Your Organisation</name>
+    </organization>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>${mainClass}</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>ws.wamp.jawampa</groupId>
+            <artifactId>jawampa-core</artifactId>
+            <version>0.5.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>ws.wamp.jawampa</groupId>
+            <artifactId>jawampa-netty</artifactId>
+            <version>0.5.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>de.jensd</groupId>
+            <artifactId>fontawesomefx</artifactId>
+            <version>8.9</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180130</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.scream3r</groupId>
+            <artifactId>jssc</artifactId>
+            <version>2.8.0</version>
+            <type>jar</type>
+        </dependency>
+        <!-- http://mvnrepository.com/artifact/eu.hansolo/medusa -->
+        <dependency>
+            <groupId>eu.hansolo</groupId>
+            <artifactId>Medusa</artifactId>
+            <version>8.0</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>eu.hansolo.enzo</groupId>
+            <artifactId>Enzo</artifactId>
+            <version>0.3.6</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.jfoenix</groupId>
+            <artifactId>jfoenix</artifactId>
+            <version>1.11.1</version>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/com.github.kurbatov/firmata4j -->
+        <dependency>
+            <groupId>com.github.kurbatov</groupId>
+            <artifactId>firmata4j</artifactId>
+            <version>2.3.6</version>
+        </dependency>
+
+    </dependencies>
+</project>
