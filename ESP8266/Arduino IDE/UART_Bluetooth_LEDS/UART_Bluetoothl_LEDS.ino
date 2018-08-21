@@ -1,7 +1,7 @@
 #include <SoftwareSerial.h>
 
-#define PIN_RX        0
-#define PIN_TX        4
+#define PIN_RX        4
+#define PIN_TX        0
 #define PIN_FRENTE    12
 #define PIN_TRAZ      13
 #define PIN_ESQUERDA  14
@@ -12,7 +12,7 @@ int trazLigado = LOW;
 int esquerdaLigado = LOW;
 int direitaLigado = LOW;
 
-SoftwareSerial serial(PIN_TX, PIN_RX);
+SoftwareSerial serial(PIN_RX, PIN_TX);
 
 void setup()
 {
