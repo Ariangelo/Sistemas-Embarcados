@@ -46,11 +46,11 @@
          $(document).ready(function(){
              var button = $(".grid-item");
              button.on("touchstart mousedown ", function(){
-                 $(this).css("backgroundColor", "Blue\
+                 $(this).css("backgroundColor", "Blue");
                  window.location.pathname = "/" + $(this)[0].id;
              });
              button.on("touchleave touchend mouseup", function(){
-                 $(this).css("backgroundColor", "POWDERBLUE\
+                 $(this).css("backgroundColor", "POWDERBLUE");
                  window.location.pathname = "/btnHome";
              });
          });
