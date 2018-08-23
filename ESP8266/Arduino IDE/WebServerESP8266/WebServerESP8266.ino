@@ -50,7 +50,7 @@ void loop() {
     while (client.connected()) {
       if (client.available()) {
         char c = client.read();
-        //Serial.write(c);
+        Serial.write(c);
         cabec += c; // armazena conteudo do cabecalho para processamento
         // se é o final da linha e a linha está em branco,
         // significa que a solicitação http terminou,
