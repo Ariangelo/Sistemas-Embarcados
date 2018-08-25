@@ -1,6 +1,6 @@
 # Sistemas-Embarcados
 
->Servidor WEB utizando ESP8266
+Servidor WEB utizando ESP8266
 ------
 
 Configurar um servidor web no ESP8266 requer muito pouco código e é extremamente simples, basta utilizar a biblioteca ESP8266WiFi.
