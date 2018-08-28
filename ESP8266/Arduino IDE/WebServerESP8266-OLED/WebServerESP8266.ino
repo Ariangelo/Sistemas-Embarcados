@@ -11,8 +11,8 @@
 #define SCL_PIN 4
 #define ENDERECO_I2C 0x3C
 
-const char* ssid = "MyASUS";
-const char* senha = "9a4281138522";
+const char* ssid = "seu ssid";
+const char* senha = "sua senha";
 
 int frenteLigado = LOW;
 int trazLigado = LOW;
