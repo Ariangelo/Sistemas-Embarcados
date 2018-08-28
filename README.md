@@ -14,6 +14,9 @@ Esta documentação irá guiá-lo através de várias classes, métodos e propri
 * [Exemplo de servidor web utilizado para testes em laboratório.](ESP8266/Arduino%20IDE/WebServerESP8266/WebServerESP8266.ino "Exemplo WEB server")
 * [Exemplo de servidor web utilizado para testes em laboratório com display OLED.](ESP8266/Arduino%20IDE/WebServerESP8266-OLED/WebServerESP8266.ino "Exemplo WEB server - OLED")
 
+Cliente WEB utizando ESP8266
+------
+
 Configurar um cliente web no ESP8266 requer muito pouco código e é extremamente simples, basta utilizar a biblioteca ESP8266WiFi.
 
 Para conectar o módulo ESP ao Wi-Fi é necessário apenas de algumas linhas de código, conforme é possível observar no site:
