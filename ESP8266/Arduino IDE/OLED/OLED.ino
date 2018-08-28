@@ -80,6 +80,7 @@ void desenhaSetaBaixo(char o) {
 
 void setup() {
   // Inverte os bytes para correta visualizacao do mapa de bits
+  
   for (int i = 0; i < setaHorizontalWidth * setaHorizontalHeight / 8 ; i++) {
     setaHorizontal[i] = flipByte(setaHorizontal[i]);
   }
