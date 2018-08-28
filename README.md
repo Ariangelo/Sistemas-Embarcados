@@ -19,7 +19,7 @@ Cliente WEB utizando ESP8266
 
 Configurar um cliente web no ESP8266 requer muito pouco código e é extremamente simples, basta utilizar a biblioteca ESP8266WiFi.
 
-Para conectar o módulo ESP ao Wi-Fi é necessário apenas de algumas linhas de código, conforme é possível observar no site:
+Para conectar o módulo ESP ao Wi-Fi é necessário apenas de algumas linhas de código, conforme é possível observar em [ESP8266 Arduino Core.](https://arduino-esp8266.readthedocs.io/en/latest/index.html "ESP8266 Arduino Core")
 
 * https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/client-examples.html
 
