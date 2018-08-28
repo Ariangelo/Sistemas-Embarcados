@@ -1,5 +1,5 @@
 #include <ESP8266WiFi.h>
-#include "SSD1306Wire.h" // legacy include: `#include "SSD1306.h"`
+#include "SSD1306Wire.h"
 
 #include "images.h"
 
