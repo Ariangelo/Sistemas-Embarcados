@@ -11,5 +11,5 @@ https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/server-examples.htm
 
 Esta documentação irá guiá-lo através de várias classes, métodos e propriedades da biblioteca ESP8266WiFi. Para aqueles que não estão familiarizados com C ++ e Arduino, é conveniente informar que os conceitos gerais e exemplos são bem detalhados e sempre incluem exemplos de uso.
 
-1 [Exemplo utilizado para testes em laboratório.](ESP8266/Arduino%20IDE/WebServerESP8266/WebServerESP8266.ino "Exemplo WEB server")
-2 [Exemplo utilizado para testes em laboratório com display OLED.](ESP8266/Arduino%20IDE/WebServerESP8266-OLED/WebServerESP8266.ino "Exemplo WEB server - OLED")
+* [Exemplo utilizado para testes em laboratório.](ESP8266/Arduino%20IDE/WebServerESP8266/WebServerESP8266.ino "Exemplo WEB server")
+* [Exemplo utilizado para testes em laboratório com display OLED.](ESP8266/Arduino%20IDE/WebServerESP8266-OLED/WebServerESP8266.ino "Exemplo WEB server - OLED")
