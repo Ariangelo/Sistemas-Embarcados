@@ -1,8 +1,8 @@
 #include <ESP8266WiFi.h>
 
-const char* ssid = "MyASUS";
-const char* senha = "9a4281138522";
-const String servidor = "192.168.43.49";
+const char* ssid = "seu ssid";
+const char* senha = "sua senha";
+const String servidor = "192.168.43.49"; // seu servidor
 String path;
 
 int pinoBotao = 0;
