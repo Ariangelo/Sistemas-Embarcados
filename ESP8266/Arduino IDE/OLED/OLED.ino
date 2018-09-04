@@ -45,11 +45,11 @@ SSD1306Wire  display(ENDERECO_I2C, SDA_PIN, SCL_PIN); // SDA, SCL
 
 void desenhaSetaHorizontal(char o) {
   display.resetDisplay();
-  display.resetOrientation();
-  if (o == 'd') display.flipScreenVertically();
+  //display.resetOrientation();
+  //if (o == 'd') display.flipScreenVertically();
   display.drawXbm((128 - setaHorizontalWidth) / 2 , 0 , setaHorizontalWidth, setaHorizontalHeight, setaHorizontal);
   display.display();
-  display.resetOrientation();
+  //display.resetOrientation();
 }
 
 void desenhaSetaVertical(char o) {
@@ -99,21 +99,21 @@ void setup() {
 
 void loop() {
   // Desenha setas em intervalos regulares
-  int tempo = 500;
+  int tempo = 10000;
   desenhaSetaHorizontal('d');
   delay(tempo);
-  desenhaSetaBaixo('d');
-  delay(tempo);
-  desenhaSetaVertical('b');
-  delay(tempo);
-  desenhaSetaBaixo('e');
-  delay(tempo);
+  //desenhaSetaBaixo('d');
+  //delay(tempo);
+  //desenhaSetaVertical('b');
+  //delay(tempo);
+  //desenhaSetaBaixo('e');
+  //delay(tempo);
   desenhaSetaHorizontal('e');
   delay(tempo);
-  desenhaSetaCima('e');
-  delay(tempo);
-  desenhaSetaVertical('c');
-  delay(tempo);
-  desenhaSetaCima('d');
-  delay(tempo);
+  //desenhaSetaCima('e');
+  //delay(tempo);
+  //desenhaSetaVertical('c');
+  //delay(tempo);
+  //desenhaSetaCima('d');
+  //delay(tempo);
 }

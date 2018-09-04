@@ -269,5 +269,3 @@ byte flipByte(byte c) {
   }
   return r;
 }
-
-
