@@ -3,7 +3,7 @@
 Termômetro com display-OLED conectado no barramento I2C utizando ESP8266
 ------
 
-Foi necessário a utilização da biblioteca [AM2320](Sistemas-Embarcados/ESP8266/Bibliotecas/AM2320.zip "Biblioteca sensor AM2320 para uso no ESP8266") para configuração do barramento I2C.
+Foi necessário a utilização da biblioteca [AM2320](././Bibliotecas/AM2320.zip "Biblioteca sensor AM2320 para uso no ESP8266") para configuração do barramento I2C.
 ```c++
 #include <AM2320.h>
 
