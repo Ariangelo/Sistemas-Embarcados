@@ -13,6 +13,7 @@ Foi necessário a utilização da biblioteca [AM2320](../../Bibliotecas/AM2320.z
 AM2320 sensor; // Criacao da instancia do sensor
 
 void setup() {
+  Serial.begin(115200);
   sensor.begin(SDA_PIN, SCL_PIN);
  
   // outros codigos
@@ -22,20 +23,24 @@ void setup() {
 Para atualização da leitura dos valores do sensor. 
 ```c++
 void loop() {
-    if (sensor.measure()) {
-      temperatura = sensor.getTemperature();
-      umidade = sensor.getHumidity();
-      sprintf(strDisplay, "%.1fºC  -  %.0f%%", temperatura, umidade);
-    } else {
-      int erroSensor = sensor.getErrorCode();
-      switch (erroSensor) {
-        case 1:
-          infoDisplay = "Sensor não conectado";
-          break;
-        case 2:
-          infoDisplay = "Dados do sensor inválido";
-          break;
-      }
+  String infoDisplay;
+  char strDisplay[30];
+  
+  if (sensor.measure()) {
+    temperatura = sensor.getTemperature();
+    umidade = sensor.getHumidity();
+    sprintf(strDisplay, "%.1fºC  -  %.0f%%", temperatura, umidade);
+  } else {
+    int erroSensor = sensor.getErrorCode();
+    switch (erroSensor) {
+      case 1:
+        infoDisplay = "Sensor não conectado";
+        break;
+      case 2:
+        infoDisplay = "Dados do sensor inválido";
+        break;
     }
+  }
+  Serial.println(infoDisplay); // Imprime informacao formatada na serial
 }
 ```
