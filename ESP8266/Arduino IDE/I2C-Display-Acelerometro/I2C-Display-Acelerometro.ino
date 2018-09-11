@@ -10,8 +10,8 @@
 #define TIME_ZONE    -3
 
 // WiFi network info.
-const char* ssid = "MyASUS";
-const char* senha = "9a4281138522";
+const char* ssid = "ssid";
+const char* senha = "senha";
 
 unsigned long contador;    // the debounce time; increase if the output flickers
 unsigned long intervalo = 1000;     // Tempo em ms do intervalo a ser executado
