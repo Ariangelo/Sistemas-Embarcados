@@ -47,3 +47,14 @@ CAYENNE_IN(PIN_BOTAO1) {
   leituraBotao = !leituraBotao;
 }
 ```
+
+Para poder controlar o dispositivo IoT é necessário criar uma conta no Cayenne.
+* [Criar uma conta no Cayenne](https://mydevices.com/cayenne/docs/getting-started/#getting-started-create-cayenne-account)
+
+Para utilizar o ESP8266 como dispositivo IoT
+* [ESP8266](https://mydevices.com/cayenne/docs/getting-started/#getting-started-esp8266)
+
+A biblioteca Cayenne MQTT ESP possui os elementos básicos para conectar o dispositivo ESP8266 com o Cayenne usando o MQTT e a Arduino IDE. 
+* Para incluir a biblioteca Cayenne
+
+![Biblioteca Cayenne](http://deinfo.uepg.br/~ari/aulas/sistemas_embarcados/imagens/CayenneLIB.png)
