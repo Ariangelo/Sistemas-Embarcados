@@ -7,15 +7,13 @@
 #define PIN_S2  14
 
 // WiFi network info.
-//const char* ssid = "MyASUS";
-//const char* senha = "9a4281138522";
-const char* ssid = "Edge";
-const char* senha = "Hubf1aEDGE";
+const char* ssid = "ssid";
+const char* senha = "senha";
 
 // Cayenne authentication info. This should be obtained from the Cayenne Dashboard.
-char username[] = "b6eb5150-ae84-11e6-82f1-ed3c04eeee58";
-char password[] = "6d32e737eb97fb735e0a5e0a505e4ab6335d6b60";
-char clientID[] = "ddda4140-ad74-11e8-89ee-73501353b78a";
+char username[] = "xxxxxxx";
+char password[] = "xxxxxxx";
+char clientID[] = "xxxxxxx";
 
 //Controle dos canais do multiplexador
 int pins[3] = {PIN_S0, PIN_S1, PIN_S2};
