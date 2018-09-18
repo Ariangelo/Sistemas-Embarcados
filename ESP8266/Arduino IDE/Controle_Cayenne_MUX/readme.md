@@ -20,9 +20,9 @@ void muxWrite(int canal) {
 * Comunicação com o canal virtual do Cayenne
 
 ```c++
-//Criado um canal virtual 20
-//O canal 21 representa o canal 0 do multiplexador
-//É chamado o procedimento muxWrite com parâmetro 1 para o canal
+//Criado um canal virtual 21
+//O canal 21 representa o canal 1 do multiplexador
+//É chamado o procedimento muxWrite com parâmetro 1 para o parâmetro canal
 CAYENNE_IN(21) {
   Serial.println("Mux canal 1");
   muxWrite(1);
