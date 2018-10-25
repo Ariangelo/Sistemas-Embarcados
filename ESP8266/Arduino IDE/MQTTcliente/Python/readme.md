@@ -2,73 +2,12 @@
 
 MQTT utizando ESP8266
 ------
-MQTT (Message Queuing Telemetry Transport) é um protocolo de mensagens dispositivos móveis de pequeno porte com otimização para redes TCP/IP. O esquema de troca de mensagens é baseado no modelo Publisher-Subscriber.
+* Descrição do Projeto
 
-* [Informações adicionais sobre o protocolo MQTT](http://mqtt.org/)
+Descrição do código fonte da biblioteca cliente Eclipse **Paho MQTT Python**, que implementa as versões 3.1 e 3.1.1 do protocolo MQTT.
 
-![Esquema MQTT](https://www.survivingwithandroid.com/wp-content/uploads/2016/10/mqtt_publisher_subscriber-1.png)
+A **Paho MQTT Python** fornece uma classe de cliente que permite que os aplicativos se conectem a um broker do MQTT para publicar (publish) mensagens e para assinar (subscribe) tópicos e também receber mensagens publicadas.
 
-###### fonte: survivingwithandroid.com
+Suporta o Python 2.7.9+ ou 3.4+, com suporte limitado para o Python 2.7 antes do 2.7.9.
 
-* Na utilização do protocolo MQTT com a IDE arduino e ESP8266 será necessário a importação da biblioteca **PubSubClient**.
-```c++
-
-#include <PubSubClient.h>
-
-// Informações do servidor MQTT que será utilizado - MQTT Broker
-const char* mqtt_server = "broker.mqtt-dashboard.com"; // Servidor MQTT - Broker gratuíto
-// Identificação do canal virtual - topico que será utilizado
-const char* topico = "Sistemas.Embarcados.Topico.Entrada"; 
-
-WiFiClient clienteWIFI;
-// Criação do cliente MQTT para assinaturas (subscribing) e publicações (publishing)
-PubSubClient clienteMQTT(clienteWIFI);
-
-// Método que monitora o recebimento de mensagens do broker MQTT (Servidor MQTT)
-void callback(char* topico, byte* payload, unsigned int tamanho) {
-
-  //Seu código
-  
-}
-
-// Conexão com o servidor MQTT para troca de mensagens
-void conectaMQTT() {
-  // Loop até conexao
-  while (!clienteMQTT.connected()) {
-    Serial.print("Aguardando conexao MQTT...");
-    if (clienteMQTT.connect(macAddress)) {
-      Serial.println("MQTT conectado");
-      //faz assinatura automatica no topico
-      clienteMQTT.subscribe(topico);
-    } else {
-      Serial.print("Falha, rc=");
-      Serial.print(clienteMQTT.state());
-      Serial.println(" tentando reconectar em 5 segundos.");
-      delay(5000);
-    }
-  }
-}
-
-void setup() {
-
-  // Conexão com broker no servidor MQTT
-  clienteMQTT.setServer(mqtt_server, 1883);
-  // Definição do procedimento de recebimento de mensagens
-  clienteMQTT.setCallback(callback);
-  
-}
-
-void loop() {
-
-  // mantem a conexão com o servidor (broker) ativa para troca de mensagens
-  if (!clienteMQTT.connected()) {
-    conectaMQTT();
-  }
-  // Thread de vericação de recebimento de mensagens
-  clienteMQTT.loop();
-  
-}
-
-```
-
-
+Paho é um projeto da Eclipse Foundation.
