@@ -14,8 +14,8 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
-const char* ssid = "Edge";
-const char* senha = "Hubf1aEDGE";
+const char* ssid = "wirelessROBOTICA";
+const char* senha = "********";
 
 const char* mqtt_server = "broker.mqtt-dashboard.com";
 
