@@ -1,5 +1,3 @@
-# Códigos fonte ESP8266 - Arduino IDE
-
 MQTT utizando ESP8266 e Python
 ------
 * Descrição do Projeto
@@ -15,7 +13,9 @@ Paho é um projeto da Eclipse Foundation.
 * Instalação
 A última versão estável está disponível no Python Package Index (PyPi) e pode ser instalada usando
 
+```
 > pip install paho-mqtt
+```
 
 * Detalhes do código Python e suas particularidades
 
