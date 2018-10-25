@@ -16,7 +16,7 @@ MQTT (Message Queuing Telemetry Transport) é um protocolo de mensagens disposit
 #include <PubSubClient.h>
 
 // Informações do servidor MQTT que será utilizado - MQTT Broker
-const char* mqtt_server = "broker.mqtt-dashboard.com"; 
+const char* mqtt_server = "broker.mqtt-dashboard.com"; // Servidor MQTT - Broker gratuíto
 // Identificação do canal virtual - topico que será utilizado
 const char* topico = "Sistemas.Embarcados.Topico.Entrada"; 
 
@@ -24,7 +24,7 @@ WiFiClient clienteWIFI;
 // Criação do cliente MQTT para assinaturas (subscribing) e publicações (publishing)
 PubSubClient clienteMQTT(clienteWIFI);
 
-// Metodo que monitora o recebimento de mensagens do broker MQTT
+// Método que monitora o recebimento de mensagens do broker MQTT (Servidor MQTT)
 void callback(char* topico, byte* payload, unsigned int tamanho) {
 
   //Seu código
@@ -33,12 +33,12 @@ void callback(char* topico, byte* payload, unsigned int tamanho) {
 
 // Conexão com o servidor MQTT para troca de mensagens
 void conectaMQTT() {
-  // Loop ate conexao
+  // Loop até conexao
   while (!clienteMQTT.connected()) {
     Serial.print("Aguardando conexao MQTT...");
     if (clienteMQTT.connect(macAddress)) {
       Serial.println("MQTT conectado");
-      //faz subscribe automatico no topico
+      //faz assinatura automatica no topico
       clienteMQTT.subscribe(topico);
     } else {
       Serial.print("Falha, rc=");
@@ -55,15 +55,18 @@ void setup() {
   clienteMQTT.setServer(mqtt_server, 1883);
   // Definição do procedimento de recebimento de mensagens
   clienteMQTT.setCallback(callback);
+  
 }
 
 void loop() {
+
   // mantem a conexão com o servidor (broker) ativa para troca de mensagens
   if (!clienteMQTT.connected()) {
     conectaMQTT();
   }
   // Thread de vericação de recebimento de mensagens
   clienteMQTT.loop();
+  
 }
 
 ```
