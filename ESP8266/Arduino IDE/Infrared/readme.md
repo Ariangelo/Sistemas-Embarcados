@@ -3,6 +3,11 @@
 Infravermelho utizando ESP8266
 ------
 
+* Esquema de ligação e simulação no Tinkercad
+![Instalação IRremoteESP8266](https://csg.tinkercad.com/things/0rbIx4AF0Nc/t725.png?rev=1541075331212000000&s=d10c875abfeb46cf1f059a8de10aafd7&v=1&type=circuits)
+
+https://www.tinkercad.com/things/0rbIx4AF0Nc
+
 * Na utilização do receptor infravermeloho (IR) com a IDE arduino e ESP8266 será necessário a importação da biblioteca **IRremoteESP8266**.
 * Instalação da biblioteca **IRremoteESP8266**
 
