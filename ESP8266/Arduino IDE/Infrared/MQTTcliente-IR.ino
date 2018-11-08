@@ -35,13 +35,7 @@ unsigned long tempoAnteriorDebounce = 0;
 unsigned long debounceDelay = 50;   // tempo do debounce time; aumentar se saida oscila
 
 const char* ssid = "wirelessROBOTICA";
-const char* senha = "mecatronica";
-
-//const char* ssid = "MyASUS";
-//const char* senha = "9a4281138522";
-
-//const char* ssid = "Edge";
-//const char* senha = "Hubf1aEDGE";
+const char* senha = "*********";
 
 const char* mqtt_server = "broker.mqtt-dashboard.com";
 const char* topico = "Sistemas.Embarcados.Topico.Entrada";
