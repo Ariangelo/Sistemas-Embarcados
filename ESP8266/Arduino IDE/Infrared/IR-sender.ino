@@ -27,7 +27,7 @@ typedef struct // Cria uma STRUCT para armazenar os dados dos botoes
 unsigned long tempoAnteriorDebounce = 0;
 unsigned long debounceDelay = 50;   // tempo do debounce time; aumentar se saida oscila
 
-IRsend irsend(pinoIR); //  Cria um emissort que codifica o sinal para controle de dispositivos
+IRsend irsend(pinoIR); //  Cria um emissor que codifica o sinal para controle de dispositivos
 
 Botao botao;
 int statusLED = HIGH;
