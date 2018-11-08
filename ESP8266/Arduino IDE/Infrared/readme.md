@@ -11,7 +11,7 @@ Infravermelho utizando ESP8266
 
 ![Instalação IRremoteESP8266](../../../Imagens/IR.png)
 
-* Detalhes e particularidades do código usando a IDE Arduino e ESP8266
+* Detalhes e particularidades do código usando a IDE Arduino e ESP8266 como receptor de códigos infravermelho
 
 ```c++
 
@@ -36,6 +36,33 @@ void loop() {
     Serial.println("");
     receptor.resume();  //  Continua a aguardar o envio de informacoes peso emissor IR
   }
+}
+
+```
+
+* Detalhes e particularidades do código usando a IDE Arduino e ESP8266 como emissor de códigos infravermelho
+
+```c++
+
+#include <IRremoteESP8266.h>//  Biblioteca para acesso ao sensor IR - ESP8266
+#include <IRsend.h>         // Biblioteca auxiliar - deve ser incluida junto com a IRremoteESP8266
+#include <IRutils.h>        // Biblioteca auxiliar - deve ser incluida junto com a IRremoteESP8266
+
+// Configuracoes iniciais
+#define pinoIR        2
+#define POWER         0xE0E040BF // Ligar/Desligar 
+#define SAMSUNG_BITS  32 // Tamanho do codigo de informacao para o dispositivo Sansung
+
+IRsend irsend(pinoIR); //  Cria um emissor que codifica o sinal para controle de dispositivos
+
+void setup() {
+  Serial.begin(115200);
+  irsend.begin(); //  Habilita o emissor para inicio de processamento dos codigos a serem enviados
+}
+
+void loop() {
+  irsend.sendSAMSUNG(POWER, SAMSUNG_BITS); //  Codifica a informacao a ser enviada para o receptor
+  delay(5000);
 }
 
 ```
