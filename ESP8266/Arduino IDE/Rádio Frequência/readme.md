@@ -31,7 +31,7 @@ void setup() {
 }
 
 void loop() {
-   transmissor.send(0x82B2295, 28); // Envia código RF para ligar led no receptor
+   transmissor.send(0x82B2295, 28); // Envia código RF para o receptor
    delay(1000);
 }
 
