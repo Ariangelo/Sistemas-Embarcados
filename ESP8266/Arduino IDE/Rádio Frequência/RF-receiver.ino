@@ -10,7 +10,6 @@
 
 RCSwitch receptor = RCSwitch(); // Cria instancia de RCSwitch para recepção de informações
 
-
 void setup() {
   Serial.begin(115200);
   pinMode(BUILTIN_LED, OUTPUT);
