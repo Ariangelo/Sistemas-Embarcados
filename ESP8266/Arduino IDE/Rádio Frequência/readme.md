@@ -2,7 +2,12 @@
 
 Rádio Frequência (RF) utizando ESP8266
 ------
+* Detalhes da pinagem do módulo de recepção 433MHz
+
 ![433 MHz RF Receiver Module](../../../Imagens/433-MHz-RF-Receiver-Module-Pinout.jpg) 
+
+* Detalhes da pinagem do módulo de transmissão 433MHz
+
 ![433 MHz RF Transmitter Module](../../../Imagens/433-MHz-RF-Transmitter-Module-Pinout.jpg)
 
 * Na utilização do receptor e transmissor de Rádio Frequência (RF) com a IDE arduino e ESP8266 será necessário a importação da biblioteca **RCSwitch**.
