@@ -32,4 +32,4 @@ const String url = "/call"; // Caminho do webservice dos procedimentos publicado
 
 ```
 
-* [Exemplo de Servidor-Roteador utilizando a tecnologia WAMP/Crossbar](ESP8266/Arduino%20IDE/wamp_8266/wamp8266-heroku "Procedimentos para upload do servidor WAMP/Crossbar")
+* [Exemplo de Servidor-Roteador utilizando a tecnologia WAMP/Crossbar](/wamp8266-heroku "Procedimentos para upload do servidor WAMP/Crossbar")
