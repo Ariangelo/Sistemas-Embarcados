@@ -1,73 +1,35 @@
 # Códigos fonte ESP8266 - Arduino IDE
 
-Rádio Frequência (RF) utizando ESP8266
+Protocolo de comunicação WAMP - Crossbar.io utizando ESP8266
 ------
-* Detalhes da pinagem do módulo de recepção 433MHz
+* O protocolo WAMP é um esforço da comunidade e a especificação é disponibilizada gratuitamente sob uma licença aberta. O projeto original e a proposta foram criados pelos desenvolvedores da **Crossbar.io** em 2012 e o desenvolvimento da **WAMP** (Web Application Messaging Protocol) é mantido pela Crossbar.io.
 
-![433 MHz RF Receiver Module](../../../Imagens/433-MHz-RF-Receiver-Module-Pinout.jpg) 
+* [Informações no site original do WAMP](https://wamp-proto.org/)
 
-* Detalhes da pinagem do módulo de transmissão 433MHz
+* O **Crossbar.io** é uma plataforma de rede de código aberto para aplicativos distribuídos como microsserviços. É responsável pela implementação do Protocolo Aberto de Mensagens de Aplicativos da Web **WAMP**, possui recursos avançados de comunicação, é escalável, robusto e seguro.
 
-![433 MHz RF Transmitter Module](../../../Imagens/433-MHz-RF-Transmitter-Module-Pinout.jpg)
+* [Informações no site original do Crossbar.io](https://crossbar.io/)
 
-* Na utilização do receptor e transmissor de Rádio Frequência (RF) com a IDE arduino e ESP8266 será necessário a importação da biblioteca **RCSwitch**.
-* Instalação da biblioteca **RCSwitch**
-![Biblioteca RCSwitch](../../../Imagens/RF.png)
-
-* Detalhes e particularidades do código usando a IDE Arduino e ESP8266 como transmissor de códigos RF
+* Detalhes e particularidades do código usando a IDE Arduino e ESP8266
 
 ```c++
 
-#include <RCSwitch.h> //  Biblioteca para acesso conexao RF - ESP8266
-
-// Configuracoes iniciais
-#define pinoIR    2
-
-RCSwitch transmissor = RCSwitch(); // Cria instancia de RCSwitch para transmissão de informações
-
-void setup() {
-  transmissor.enableTransmit(pinoRF); // O transmissor sera conectado ao pino "pinoRF"
-  transmissor.setProtocol(6); // Será utilizado protocolo 6
-}
-
-void loop() {
-   transmissor.send(0x82B2295, 28); // Envia código RF para o receptor
-   delay(1000);
-}
+const char* host = "app-votar.herokuapp.com"; // Servidor - Roteador dos procedimentos publicados
+const int httpPort = 80; // Porta do servidor
+const String url = "/call"; // Caminho do webservice dos procedimentos publicados
 
 ```
 
-* Detalhes e particularidades do código usando a IDE Arduino e ESP8266 como recepção de códigos RF
+* Chama do microsserviço utilizando **web service**
 
 ```c++
 
-#include <RCSwitch.h> //  Biblioteca para acesso conexao RF - ESP8266
-
-// Configuracoes iniciais
-#define pinoIR        2
-
-RCSwitch receptor = RCSwitch(); // Cria instancia de RCSwitch para recepção de informações
-
-void setup() {
-  Serial.begin(115200);
-  receptor.enableReceive(pinoRF); // O receptor sera conectado ao pino "pinoRF"
-}
-
-void loop() {
-  if (receptor.available()) { // Verifica se existe informação disponível
-    int valor = receptor.getReceivedValue(); // Armazena o valor da informação
-    if (valor == 0) {
-      Serial.print("Código desconhecido.");
-    } else {
-      Serial.print("Recebido ");
-      Serial.print(valor, HEX);
-      Serial.print(" / ");
-      Serial.print(receptor.getReceivedBitlength()); // Obtem o valor do tamanho da informação
-      Serial.print("bit ");
-      Serial.print("Protoco0ol: ");
-      Serial.println(receptor.getReceivedProtocol()); // Obtem o valor do protocolo de transmissão
-    }
-    receptor.resetAvailable(); // Prepara receptor para receber nova informação
-}
+ String data = "{\"procedure\": \"io.crossbar.demo.voto.votar\", \"args\": [ \"r2d2\"]}"; // Votar no R2D2
+ // Requisicao postada no servidor
+ client.print("POST " + url + " HTTP/1.1\r\n" +
+              "Host: " + host + "\r\n" +
+              "Content-Type: application/json" + "\r\n" +
+              "Content-Length: " + data.length() + "\r\n\r\n" +
+              data);
 
 ```
