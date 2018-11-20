@@ -4,8 +4,8 @@
 // Configuracoes iniciais
 #define pinoBotao     0
 
-const char* ssid = "Edge";
-const char* password = "Hubf1aEDGE";
+const char* ssid = "ssid";
+const char* password = "senha";
 
 const char* host = "app-votar.herokuapp.com"; // Servidor - Roteador dos procedimentos publicados
 const int httpPort = 80; // Porta do servidor
