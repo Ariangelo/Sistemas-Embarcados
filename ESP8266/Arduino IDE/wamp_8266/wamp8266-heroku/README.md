@@ -10,3 +10,32 @@ Pressione o botão acima para fazer upload do sistema no **Heroku**. É necessá
 * Em caso de dúvidas: https://devcenter.heroku.com/articles/dyno-sleeping
 
 Este site foi construído baseado no tutorial de [AndreMiras/crossbar-hello-python-to-heroku](https://github.com/AndreMiras/crossbar-hello-python-to-heroku).
+
+* Para configuração do funcionamento correto do web service para ser acessado pelo ESP8266 o código JSON abaixo é necessário de ser implantado no arquivo **config.json** no diretório **.crossbar**
+
+```json
+{
+    "type": "web",
+    "endpoint": {
+        "type": "tcp",
+        "port": "$PORT"
+    },
+    "paths": {
+        "/": {
+            "type": "static",
+            "directory": "../web"
+        },
+        "ws": {
+            "type": "websocket"
+        },
+        "call": {
+            "type": "caller",
+            "realm": "embarcados",
+            "role": "anonymous",
+            "options": {
+                "debug": true
+            }
+        }
+    }
+}
+```
