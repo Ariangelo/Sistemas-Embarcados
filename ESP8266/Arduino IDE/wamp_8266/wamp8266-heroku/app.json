@@ -1,0 +1,7 @@
+{
+  "name": "Crossbar to Heroku",
+  "description": "Deploys the AutobahnPython based example to Heroku",
+  "repository": "https://github.com/AndreMiras/crossbar-hello-python-to-heroku",
+  "keywords": ["Heroku", "Crossbar", "Autobahn", "Python"]
+  
+}

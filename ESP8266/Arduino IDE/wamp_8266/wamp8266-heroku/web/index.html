@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt_br">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>Votação</title>
+        <link rel="stylesheet" href="css/voto.css">
+    </head>
+    <body>
+        <header>
+            <div id="header_inner">
+                <div id="demo_title">
+                    <span>Votação</span>
+                </div>
+                <a class="navbar-brand" href="/">
+                    <img src="img/crossbar_icon_inverted.png" alt="crossbar logo inverted" width="60" height="60">
+                    <span class="fontFace">
+                        <span>Robótica</span><span>.io</span>
+                    </span>
+                </a>
+            </div>
+        </header>
+        <div class="demo_links">
+            <p>
+                Sincroniza votação entre várias instâncias de execução em tempo real.
+            </p>
+        </div>
+
+        <div id="demo_body">
+            <h1>Vote no seu robô favorito!</h1>
+            <div id="votoContainer">
+                <div>
+                    <img src="img/bb8.png" alt="BB8 - droid" height="200">
+                    <span> BB-8 </span>
+                    <div>
+                        <input type="text" id="votosbb8" disabled/>
+                    </div>
+                    <br>
+                    <button id="bb8">
+                        Votar
+                    </button>
+                </div>
+                <div>
+                    <img src="img/c3po.png" alt="C3PO - droid" height="200">
+                    <span>C3-PO</span>
+                    <div>
+                        <input type="text" id="votosc3po" disabled />
+                    </div>
+                    <br>
+                    <button id="c3po">
+                        Votar
+                    </button>
+                </div>
+                <div>
+                    <img src="img/r2d2.png" alt="R2D2 - droid" height="200">
+                    <span>R2D2</span>
+                    <div>
+                        <input type="text" id="votosr2d2" disabled />
+                    </div>
+                    <br>
+                    <button id="r2d2">
+                        Votar
+                    </button>
+                </div>
+            </div>
+            <div id="resetVotosContainer">
+                <button id="resetVotos" disabled>
+                    Reset Votos
+                </button>
+            </div>
+        </div>
+
+        <script>AUTOBAHN_DEBUG = false;</script>
+        <script src="js/autobahn.min.js"></script>
+        <script src="js/frontend.js"></script>
+
+    </body>
+</html>
