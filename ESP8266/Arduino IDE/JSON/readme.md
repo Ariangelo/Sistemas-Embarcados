@@ -9,7 +9,7 @@ JSON utizando ESP8266
 
 * Instalação da biblioteca **ArduinoJson**
 
-![Instalação ArduinoJson](../../../Imagens/json.png)
+![Instalação ArduinoJson](../../../Imagens/Json.png)
 
 * Detalhes e particularidades do código usando a IDE Arduino e ESP8266 como gerador de JSON
 
