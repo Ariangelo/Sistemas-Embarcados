@@ -14,8 +14,8 @@
 #define BAND      433E6
 #define TIME_ZONE    -2
 
-const char* ssid  = "Edge";
-const char* senha = "Hubf1aEDGE";
+const char* ssid  = "SSID";
+const char* senha = "*********";
 
 unsigned long contador;    // the debounce time; increase if the output flickers
 unsigned long intervalo = 1000;     // Tempo em ms do intervalo a ser executado
