@@ -3,13 +3,13 @@
 Infravermelho utizando ESP8266
 ------
 
-:heavy_check_mark: [Link para: Esquema de ligação e simulação no Tinkercad](https://www.tinkercad.com/things/0rbIx4AF0Nc)
-![Uso de sensor IR e controle remoto](https://csg.tinkercad.com/things/0rbIx4AF0Nc/t725.png?rev=1541075331212000000&s=d10c875abfeb46cf1f059a8de10aafd7&v=1&type=circuits)
+![ESP32-LoRa](../../../Imagens/ESP32-LoRa.png)
 
-* Na utilização do receptor infravermeloho (IR) com a IDE arduino e ESP8266 será necessário a importação da biblioteca **IRremoteESP8266**.
-* Instalação da biblioteca **IRremoteESP8266**
+* A especificação **LoRaWAN** é um protocolo de rede LPWA (Low Power, Wide Area) projetado para conectar sem fio sistemas operados por bateria à Internet em ao outros tipos de redes, e tem como alvo os principais requisitos da Internet das Coisas (IoT).
 
-![Instalação IRremoteESP8266](../../../Imagens/IR.png)
+* Instalação da biblioteca **LoRaWAN**
+
+![Instalação IRremoteESP8266](../../../Imagens/LoRa.png)
 
 * Detalhes e particularidades do código usando a IDE Arduino e ESP8266 como receptor de códigos infravermelho
 
