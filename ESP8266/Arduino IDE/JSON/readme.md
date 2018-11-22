@@ -1,68 +1,76 @@
 # Códigos fonte ESP8266 - Arduino IDE
 
-Infravermelho utizando ESP8266
+JSON utizando ESP8266
 ------
 
-:heavy_check_mark: [Link para: Esquema de ligação e simulação no Tinkercad](https://www.tinkercad.com/things/0rbIx4AF0Nc)
-![Uso de sensor IR e controle remoto](https://csg.tinkercad.com/things/0rbIx4AF0Nc/t725.png?rev=1541075331212000000&s=d10c875abfeb46cf1f059a8de10aafd7&v=1&type=circuits)
+* Acessar o site: https://arduinojson.org/
 
-* Na utilização do receptor infravermeloho (IR) com a IDE arduino e ESP8266 será necessário a importação da biblioteca **IRremoteESP8266**.
-* Instalação da biblioteca **IRremoteESP8266**
+* Na utilização de JSONs com a IDE arduino e ESP8266 será necessário a importação da biblioteca **ArduinoJson**.
 
-![Instalação IRremoteESP8266](../../../Imagens/IR.png)
+* Instalação da biblioteca **ArduinoJson**
 
-* Detalhes e particularidades do código usando a IDE Arduino e ESP8266 como receptor de códigos infravermelho
+![Instalação ArduinoJson](../../../Imagens/json.png)
+
+* Detalhes e particularidades do código usando a IDE Arduino e ESP8266 como gerador de JSON
 
 ```c++
 
-#include <IRremoteESP8266.h>//  Biblioteca para acesso ao sensor IR - ESP8266
-#include <IRrecv.h>         // Biblioteca auxiliar - deve ser incluida junto com a IRremoteESP8266
-#include <IRutils.h>        // Biblioteca auxiliar - deve ser incluida junto com a IRremoteESP8266
-
-// Configuracoes iniciais
-#define pinoIR    2
-
-IRrecv receptor(pinoIR);   //  Cria um receptor que decodifica o sinal do sensor IR - codigos do controle remoto
-decode_results resultados; //  Variavel que aramzenara os resultados recebidos
+#include <ArduinoJson.h>
 
 void setup() {
-  Serial.begin(115200);
-  receptor.enableIRIn();  //  Habilita o receptor para inicio de processamento dos codigos recebidos do emissor IR
-}
+  // Alocacao de espaco para o documento JSON
+  // 200 é o tamanho em bytes que será alocado na memoria
+  // Use arduinojson.org/assistant para computar a capacidade
+  StaticJsonDocument<200> doc;
 
-void loop() {
-  if (receptor.decode(&resultados)) {   //  Decodifica o codigo da informacao enviada pelo emissor IR
-    serialPrintUint64(resultados.value, HEX); //  Mostra o valor em HEX do resultado recebido
-    Serial.println("");
-    receptor.resume();  //  Continua a aguardar o envio de informacoes peso emissor IR
-  }
+  // Transforma o documento (doc) em um objeto JSON (root)
+  JsonObject root = doc.to<JsonObject>();
+
+  // Adicionando valores na JSON
+  root["sensor"] = "AM2320";
+
+  // Adicionando arrays na JSON
+  JsonArray data = root.createNestedArray("info");
+  data.add(28.6);
+
+  // Serializa o objeto e mostra na Serial
+  serializeJson(root, Serial);
+  
+  // Tambem e possivel serializar para uma String ou char info[]
+  String resultado;
+  serializeJson(root, resultado);
+  char info[200];
+  serializeJsonPretty(root, info);
 }
 
 ```
 
-* Detalhes e particularidades do código usando a IDE Arduino e ESP8266 como emissor de códigos infravermelho
+* Detalhes e particularidades do código usando a IDE Arduino e ESP8266 como interpretador (parser) JSON
 
 ```c++
 
-#include <IRremoteESP8266.h>//  Biblioteca para acesso ao sensor IR - ESP8266
-#include <IRsend.h>         // Biblioteca auxiliar - deve ser incluida junto com a IRremoteESP8266
-#include <IRutils.h>        // Biblioteca auxiliar - deve ser incluida junto com a IRremoteESP8266
-
-// Configuracoes iniciais
-#define pinoIR        2
-#define POWER         0xE0E040BF // Ligar/Desligar 
-#define SAMSUNG_BITS  32 // Tamanho do codigo de informacao para o dispositivo Sansung
-
-IRsend irsend(pinoIR); //  Cria um emissor que codifica o sinal para controle de dispositivos
+#include <ArduinoJson.h>
 
 void setup() {
-  Serial.begin(115200);
-  irsend.begin(); //  Habilita o emissor para inicio de processamento dos codigos a serem enviados
-}
+  // Alocacao de espaco para o documento JSON
+  // 200 é o tamanho em bytes que será alocado na memoria
+  // Use arduinojson.org/assistant para computar a capacidade
+  StaticJsonDocument<200> doc;
 
-void loop() {
-  irsend.sendSAMSUNG(POWER, SAMSUNG_BITS); //  Codifica a informacao a ser enviada para o receptor
-  delay(5000);
+  // JSON string de informacoes.
+  char json[] = "{\"sensor\":\"AM2320\",\"hora\":\"23:59:59\",\"info\":[28.75, 72.30]}";
+
+  // Deserializar o documento JSON
+  DeserializationError erro = deserializeJson(doc, json);
+
+  // Obtem o root do docuemento JSON
+  JsonObject root = doc.as<JsonObject>();
+
+  // Processamento dos valores que serao atribuidos a variaveis
+  const char* sensor = root["sensor"];
+  String hora = root["hora"];
+  double temperatura = root["info"][0];
+  double umidade = root["info"][1];
 }
 
 ```
