@@ -5,7 +5,7 @@ Sistemas embarcados são parte integrante de muitos dispositivos de uso cotidian
 * Características importantes
     • Baixo consumo de energia
     • Tamanho reduzido
-    • Baixo custo
+    • Baixo custopyth
 
 * [Utizando o ESP8266](Documentos/ESP8266.pdf "Dados técnicos básicos para uso do ESP8266")
 
