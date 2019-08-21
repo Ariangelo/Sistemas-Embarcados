@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+   <head>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <style>
+         .content {
+         max-width: 280px;
+         margin: auto;
+         }
+         .grid {
+         display: grid;
+         border-radius: 1em;
+         grid-gap: 10px;
+         grid-template-columns: 80px 80px 80px;
+         background-color: LAVENDER;
+         padding: 10px;
+         }
+         .grid-item {
+         border: none;
+         padding: 10px;
+         background-color: POWDERBLUE;
+         color: White;
+         border-radius: 10px;
+         font-size: 200%;
+         text-align: center;
+        }
+      </style>
+   </head>
+   <body>
+      <div class="content">
+         <h3 align="center">Click na seta correspondente ao movimento desejado, para parar click Home.</h3>
+         <div class="grid">
+            <div id="btnCimaEsq" class="grid-item"><span class="fa" style="transform: rotate(-45deg);">&#xf0aa;</span></div>
+            <div id="btnCima" class="grid-item"><span class="fa">&#xf0aa;</span></div>
+            <div id="btnCimaDir" class="grid-item"><span class="fa" style="transform: rotate(45deg);">&#xf0aa;</span></div>
+            <div id="btnEsquerda" class="grid-item"><span class="fa">&#xf0a8;</span></div>
+            <div id="btnHome" class="grid-item"><span class="fa">&#xf015;</span></div>
+            <div id="btnDireita" class="grid-item"><span class="fa">&#xf0a9;</span></div>
+            <div id="btnBaixoEsq" class="grid-item"><span class="fa" style="transform: rotate(45deg);">&#xf0ab;</span></div>
+            <div id="btnBaixo" class="grid-item"><span class="fa">&#xf0ab;</span></div>
+            <div id="btnBaixoDir" class="grid-item"><span class="fa" style="transform: rotate(-45deg);">&#xf0ab;</span></div>
+         </div>
+      </div>
+      <script>
+         $(document).ready(function(){
+             var button = $(".grid-item");
+             button.on("touchstart mousedown ", function(){
+                 $(this).css("backgroundColor", "Blue");
+                 window.location.pathname = "/" + $(this)[0].id;
+             });
+             button.on("touchleave touchend mouseup", function(){
+                 $(this).css("backgroundColor", "POWDERBLUE");
+                 window.location.pathname = "/btnHome";
+             });
+         });
+      </script>
+  </body>
+</html>
