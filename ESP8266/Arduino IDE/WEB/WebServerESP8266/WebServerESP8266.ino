@@ -5,8 +5,8 @@
 #define PIN_ESQUERDA  14
 #define PIN_DIREITA   15
 
-const char* ssid = "ssid";
-const char* senha = "senha";
+const char* ssid = "Zhone_E03C";
+const char* senha = "Hubf1aEDGE";
 
 int frenteLigado = LOW;
 int trazLigado = LOW;
@@ -67,8 +67,12 @@ void loop() {
           client.println("<!doctype html>");
           client.println("<html>");
           client.println("   <head>");
-          client.println("      <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js\"></script>");
-          client.println("      <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/fontawesome.min.css\">");
+          client.println("      <meta charset=\"utf-8\">");
+          client.println("      <link rel=\"stylesheet\" href=\"https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css\">");
+          client.println("      <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">");
+          client.println("      <link rel=\"shortcut icon\" href=\"https://www.google.com/s2/favicons?domain=www.uepg.br\">");
+          client.println("      <script src=\"https://code.jquery.com/jquery-1.12.4.js\"></script>");
+          client.println("      <script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.js\"></script>");
           client.println("      <style>");
           client.println("         .content {");
           client.println("         max-width: 280px;");
