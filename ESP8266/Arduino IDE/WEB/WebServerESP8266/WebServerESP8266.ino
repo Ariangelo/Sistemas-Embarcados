@@ -5,8 +5,8 @@
 #define PIN_ESQUERDA  14
 #define PIN_DIREITA   15
 
-const char* ssid = "Zhone_E03C";
-const char* senha = "Hubf1aEDGE";
+const char* ssid = "ssid";
+const char* senha = "senha";
 
 int frenteLigado = LOW;
 int trazLigado = LOW;
