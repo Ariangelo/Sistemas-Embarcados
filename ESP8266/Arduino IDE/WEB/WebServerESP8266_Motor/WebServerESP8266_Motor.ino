@@ -13,7 +13,6 @@ const char* ssid = "ssid";
 const char* senha = "senha";
 
 int velocidade = 50;
-bool gatinhar = false;
 WiFiServer server(80);
 DC_Motor motorEsquerdo(BI1, BI2, PWM_B);
 DC_Motor motorDireito(AI1, AI2, PWM_A);
@@ -42,7 +41,6 @@ void setup() {
 }
 
 void loop() {
-  if (gatinhar) acaoGatinhar();
   WiFiClient client = server.available();   // Aguarda requisicoes de clientes
   if (client) {                             // Se cliente conectado,
     String cabec = ""; // Armazenamento HTTP request
@@ -169,7 +167,6 @@ void processaGET(String c) {
     String vel = acao.substring(acao.indexOf(";") + 1);
     acao = acao.substring(0, acao.indexOf(";"));
     velocidade = vel.toInt();
-    gatinhar = false;
     Serial.println(acao);
     Serial.println(velocidade);
     motorEsquerdo.velocidade(velocidade);
