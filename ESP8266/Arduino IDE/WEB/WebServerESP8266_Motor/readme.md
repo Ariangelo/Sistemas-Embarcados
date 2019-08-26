@@ -2,6 +2,7 @@
 
 Aplicação com ponte H e motor de corrente contínua utizando ESP8266
 ------
+* Driver TB6612FNG.jpg
 <p align="center">
   <img src="../../../../Imagens/TB6612FNG.jpg" width="640">
 </p>
