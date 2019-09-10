@@ -1,19 +1,18 @@
 #include <ESP8266WiFi.h>
 #include<DC_Motor.h>
 
-#define PWM_B  2
-#define PWM_A  0
-#define STBY  16
-#define AI2   15
-#define AI1   13
-#define BI1   12
-#define BI2   14
+#define PWM_B  2 //D4
+#define PWM_A  0 //D3
+#define STBY  16 //D0
+#define AI2   15 //D8
+#define AI1   13 //D7
+#define BI1   12 //D6
+#define BI2   14 //D5
 
-const char* ssid = "MyASUS";
-const char* senha = "9a4281138522";
+const char* ssid = "ssid";
+const char* senha = "senha";
 
 int velocidade = 50;
-bool gatinhar = false;
 WiFiServer server(80);
 DC_Motor motorEsquerdo(BI1, BI2, PWM_B);
 DC_Motor motorDireito(AI1, AI2, PWM_A);
@@ -42,7 +41,6 @@ void setup() {
 }
 
 void loop() {
-  if (gatinhar) acaoGatinhar();
   WiFiClient client = server.available();   // Aguarda requisicoes de clientes
   if (client) {                             // Se cliente conectado,
     String cabec = ""; // Armazenamento HTTP request
@@ -156,15 +154,6 @@ void loop() {
   }
 }
 
-void acaoGatinhar() {
-  motorEsquerdo.horario();
-  motorDireito.parar();
-  delay(500);
-  motorEsquerdo.parar();
-  motorDireito.horario();
-  delay(500);
-}
-
 void processaGET(String c) {
   if (c.indexOf("GET /") >= 0) {
     String linha = c.substring(c.indexOf("GET /") + 5);
@@ -178,7 +167,6 @@ void processaGET(String c) {
     String vel = acao.substring(acao.indexOf(";") + 1);
     acao = acao.substring(0, acao.indexOf(";"));
     velocidade = vel.toInt();
-    gatinhar = false;
     Serial.println(acao);
     Serial.println(velocidade);
     motorEsquerdo.velocidade(velocidade);
@@ -190,7 +178,7 @@ void processaGET(String c) {
       motorDireito.horario();
     }
     else if (acao == "btnCimaDir") {
-
+      //
     }
     else if (acao == "btnEsquerda") {
       motorEsquerdo.parar();
@@ -205,15 +193,11 @@ void processaGET(String c) {
       motorDireito.parar();
     }
     if (acao == "btnBaixoEsq") {
-
+      //
     }
     else if (acao == "btnBaixo") {
       motorEsquerdo.antiHorario();
       motorDireito.antiHorario();
     }
-    else if (acao == "btnBaixoDir") {
-      gatinhar = true;
-    }
   }
-
 }
