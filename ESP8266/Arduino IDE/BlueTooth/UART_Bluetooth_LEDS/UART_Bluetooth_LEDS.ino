@@ -1,7 +1,7 @@
 #include <SoftwareSerial.h>
 
 #define PIN_RX        4
-#define PIN_TX        0
+#define PIN_TX        5
 #define PIN_FRENTE    12
 #define PIN_TRAZ      13
 #define PIN_ESQUERDA  14
