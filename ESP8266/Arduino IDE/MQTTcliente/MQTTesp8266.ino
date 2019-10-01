@@ -14,6 +14,8 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
+#define BUILTIN_LED  2
+
 const char* ssid = "wirelessROBOTICA";
 const char* senha = "********";
 
@@ -46,7 +48,7 @@ void conectaMQTT() {
     if (clienteMQTT.connect("clienteWIFI" +  random(300))) {
       Serial.println("MQTT conectado");
       //faz subscribe automatico no topico
-      clienteMQTT.subscribe("Sitemas.Embarcados.Topico.Entrada");
+      clienteMQTT.subscribe("Sistemas.Embarcados.Topico.Entrada");
     } else {
       Serial.print("Falha, rc=");
       Serial.print(clienteMQTT.state());
