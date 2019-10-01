@@ -6,7 +6,7 @@
   É realizada a conexão com um servidor MQTT e, em seguida:
   - publicação (publish) "mensagem MQTT = contador" para o tópico "Sitemas.Embarcados.Topico.Saida" a cada dois segundos.
   - subscreve (subscribe) o tópico "Sitemas.Embarcados.Topico.Entrada", imprimindo todas as mensagens recebe.
-  - Se o primeiro caractere do tópico "Sitemas.Embarcados.Topico.Entrada" for 1, ligua o LED da placa NODEMCU, caso contrário desliga o LED.
+  - Se o primeiro caractere do tópico "Sistemas.Embarcados.Topico.Entrada" for 1, ligua o LED da placa NODEMCU, caso contrário desliga o LED.
 
   O sistema será reconectado ao servidor caso a conexão tenha sido perdida usando uma função conectaMQTT
 */
