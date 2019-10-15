@@ -27,9 +27,9 @@ void loop() {
       Serial.print(" / ");
       Serial.print(receptor.getReceivedBitlength()); // Obtem o valor do tamanho da informação
       Serial.print("bit ");
-      Serial.print("Protoco0ol: ");
+      Serial.print("Protocolo: ");
       Serial.println(receptor.getReceivedProtocol()); // Obtem o valor do protocolo de transmissão
-      if (valor == 0x82B2295) { // Testa o valor da indormação recebida
+      if (valor == 0x82B2295) { // Testa o valor da informação recebida
         digitalWrite(BUILTIN_LED, LOW); // Liga o led
       }
       if (valor == 0x82B22A5) {
