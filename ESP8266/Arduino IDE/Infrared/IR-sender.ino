@@ -3,9 +3,9 @@
 #include <IRutils.h>        // Biblioteca auxiliar - deve ser incluida junto com a IRremoteESP8266
 
 // Configuracoes iniciais
-#define pinoBotao     0
+#define pinoBotao     0 //D3
 #define pinoLED       BUILTIN_LED
-#define pinoIR        2
+#define pinoIR        2 // D4
 // Controles basicos TV Sansung
 #define POWER         0xE0E040BF // Ligar/Desligar 
 #define VOL_UP        0xE0E0E01F // Vol +
