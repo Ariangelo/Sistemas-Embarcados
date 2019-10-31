@@ -20,7 +20,7 @@ Infravermelho utizando ESP8266
 #include <IRutils.h>        // Biblioteca auxiliar - deve ser incluida junto com a IRremoteESP8266
 
 // Configuracoes iniciais
-#define pinoIR    2
+#define pinoIR    2 // D4
 
 IRrecv receptor(pinoIR);   //  Cria um receptor que decodifica o sinal do sensor IR - codigos do controle remoto
 decode_results resultados; //  Variavel que aramzenara os resultados recebidos
