@@ -2,8 +2,6 @@
 
 Termômetro com display-OLED conectado no barramento I2C utizando ESP8266
 ------
-# ![Sensor AM2320](../../../Imagens/OKY3078-6.png)
-
 <p align="center">
   <img src="../../../Imagens/OKY3078-6.png">
 </p>
