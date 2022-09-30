@@ -5,7 +5,7 @@ Termômetro com display-OLED conectado no barramento I2C utizando ESP8266
 # ![Sensor AM2320](../../../Imagens/OKY3078-6.png)
 
 <p align="center">
-  <img src="../../../OKY3078-6.png">
+  <img src="../../../Imagens/OKY3078-6.png">
 </p>
 
 Foi necessário a utilização da biblioteca [AM2320](../../Bibliotecas/AM2320.zip "Biblioteca sensor AM2320 para uso no ESP8266") para configuração do barramento I2C.
