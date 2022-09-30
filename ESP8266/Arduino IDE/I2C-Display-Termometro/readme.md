@@ -2,7 +2,7 @@
 
 Termômetro com display-OLED conectado no barramento I2C utizando ESP8266
 ------
-![Sensor AM2320](https://cdn.instructables.com/FX4/JZ78/INT6D9T7/FX4JZ78INT6D9T7.LARGE.jpg?auto=webp&width=396)
+![Sensor AM2320](../../../Imagens/OKY3078-6.png)
 
 Foi necessário a utilização da biblioteca [AM2320](../../Bibliotecas/AM2320.zip "Biblioteca sensor AM2320 para uso no ESP8266") para configuração do barramento I2C.
 
