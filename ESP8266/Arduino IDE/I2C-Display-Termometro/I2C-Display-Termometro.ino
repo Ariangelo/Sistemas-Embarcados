@@ -1,14 +1,22 @@
-#include <WiFiManager.h> // https://github.com/tzapu/WiFiManager
+#include <WiFiManager.h>  // https://github.com/tzapu/WiFiManager
 //para controlar estado do LED
 #include <Ticker.h>
 
-#include <SSD1306Wire.h>
-#include <AM2320.h>
+// bibliotecas necessarias para conectar o OLED e o sensor AM2320
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include <Fonts/FreeSans9pt7b.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_AM2320.h>
 
-#define SDA_PIN       4
-#define SCL_PIN       5
+// caracteristicas dos display OLED
+#define OLED_RESET -1
 #define ENDERECO_OLED 0x3C
-#define TAMANHO       GEOMETRY_128_32
+#define DISPLAY_TAMANHO 128
+#define DISPLAY_ALTURA 32
+
 #define LED LED_BUILTIN
 
 Ticker ticker;
@@ -17,13 +25,13 @@ WiFiClient clienteWIFI;
 String strMacAddress;
 char macAddress[6];
 
-unsigned long contador;         // Armazena o valor dos milisegundos até o próximo intervalo
-unsigned long intervalo = 1000; // Tempo em ms do intervalo a ser executado
+unsigned long contador;          // Armazena o valor dos milisegundos até o próximo intervalo
+unsigned long intervalo = 1000;  // Tempo em ms do intervalo a ser executado
 float temperatura;
 float umidade;
 
-AM2320 sensor; // Cria uma instancia do sensor AM2320
-SSD1306Wire display(ENDERECO_OLED, SDA_PIN, SCL_PIN, TAMANHO); // SDA, SCL -> Configuracao do display SSD1306
+Adafruit_AM2320 am2320 = Adafruit_AM2320();                                    // Cria uma instancia do sensor AM2320
+Adafruit_SSD1306 display(DISPLAY_TAMANHO, DISPLAY_ALTURA, &Wire, OLED_RESET);  // Configuracao do display SSD1306
 
 void piscar() {
   digitalWrite(LED, !digitalRead(LED));
@@ -38,15 +46,15 @@ void configuracaoCallback(WiFiManager *gerenciadorWiFi) {
 }
 
 void setup() {
-  // Conexao to Wi-Fi
-  // Mostrar informacao no Display OLED
-  display.init();
-  display.setTextAlignment(TEXT_ALIGN_CENTER_BOTH);
-  display.setFont(ArialMT_Plain_24);
-  display.drawString(display.getWidth() / 2, display.getHeight() / 2, "Conectando");
-  display.display();
-  // Mostrar informacao na porta Serial
   Serial.begin(115200);
+  // Conexao to Wi-Fi
+  if (!display.begin(SSD1306_SWITCHCAPVCC, ENDERECO_OLED)) {
+    Serial.println(F("SSD1306 falhou"));
+    while (true) {}
+  }
+  // Mostrar informacao no Display OLED
+  centralizaFonte("Conectando");
+  // Mostrar informacao na porta Serial
   pinMode(0, INPUT);
   pinMode(LED, OUTPUT);
   // Forca o modo para STA+AP
@@ -74,51 +82,51 @@ void setup() {
   Serial.println();
   strMacAddress = WiFi.macAddress();
   strMacAddress.toCharArray(macAddress, 6);
-
-  // Mostra o IP da conexao no display OLED
-  display.clear();
-  display.setFont(ArialMT_Plain_10);
-  display.drawString(display.getWidth() / 2, 18, "IP: " + WiFi.localIP().toString());
-  display.display();
-
-  contador = millis(); // Inicializa o contador para o intervalo
-
+  centralizaNormal("IP: " + WiFi.localIP().toString(), 0.5);
+  contador = millis();  // Inicializa o contador para o intervalo
   ticker.detach();
   //Mantem o LED ligado
   digitalWrite(LED, LOW);
-  
-  sensor.begin();//(SDA_PIN, SCL_PIN); // Conecta o sensor AM2320 ao barramento I2C - SDA, SCL
+  am2320.begin();
+  delay(2000);
 }
 
 void loop() {
-  String infoDisplay; // Variavel que armazena a informacao a ser mostrada no display ou porta serial
-  char strDisplay[30]; // Variavel auxiliar para armazenar infoDisplay formatada
+  char infoDisplay[30];  // Variavel auxiliar para armazenar infoDisplay formatada
   if (millis() - contador > intervalo) {
-    if (sensor.measure()) { // Verifica se o sensor esta operacional para leitura dos valores
-      temperatura = sensor.getTemperature(); // Obtem o valor de temperatura
-      umidade = sensor.getHumidity(); // Obtem o valor da umidade relativa
-      sprintf(strDisplay, "%.1fºC  -  %.0f%%", temperatura, umidade); // Formata a saida para ser mostrada no display
-    } else {
-      sprintf(strDisplay, "Erro leitura");
-      int errorCode = sensor.getErrorCode();
-      switch (errorCode) {
-        case 1: Serial.println("ERR: Sensor is offline"); break;
-        case 2: Serial.println("ERR: CRC validation failed."); break;
-      }
-    }
-
-    infoDisplay = strDisplay; // Atualiza o conteudo da informacao para String infoDisplay
-    Serial.println(infoDisplay); // Imprime informacao formatada na serial
-    // Mostra informacao atualizada da hora no display OLED
-    display.clear();
-    display.drawRect(0, 0, display.getWidth() - 1, display.getHeight() - 1);
-    display.setTextAlignment(TEXT_ALIGN_CENTER);
-    display.setFont(ArialMT_Plain_16);
-    display.drawString(display.getWidth() / 2, display.getHeight() / 2 - 16, infoDisplay);
-    display.setFont(ArialMT_Plain_10);
-    display.drawString(display.getWidth() / 2, display.getHeight() / 2 + (TAMANHO == GEOMETRY_128_64 ? 5 : 0), "IP: " + WiFi.localIP().toString());
-    display.display();
-
-    contador = millis();
+       temperatura = am2320.readTemperature(); // Obtem o valor de temperatura
+       umidade = am2320.readHumidity();        // Obtem o valor da umidade relativa
+       sprintf(infoDisplay, "%.1fºC - %.0f%%", temperatura, umidade);  // Formata a saida para ser mostrada no display
+       Serial.println(infoDisplay);  // Imprime informacao formatada na serial
+       centralizaFonte(infoDisplay); // Mostra informacao atualizada da hora no display OLED
+       contador = millis();
   }
+}
+
+// Procedimentos para mostrar informacao no OLED
+void centralizaFonte(String informacao) {
+  int16_t x1, y1;
+  uint16_t w, h;
+  display.setTextColor(SSD1306_WHITE);
+  display.setFont(&FreeSans9pt7b);
+  display.clearDisplay();
+  display.drawRect(0, 0, display.width(), display.height(), SSD1306_WHITE);
+  display.getTextBounds(informacao, 0, 0, &x1, &y1, &w, &h);
+  display.setCursor((display.width() - w) / 2, display.height() - h + 2);
+  display.print(informacao);
+  display.display();
+}
+
+void centralizaNormal(String informacao, uint8_t escala) {
+  int16_t x1, y1;
+  uint16_t w, h;
+  display.setFont();
+  display.cp437(true);
+  display.setTextSize(escala);
+  display.clearDisplay();
+  display.drawRect(0, 0, display.width(), display.height(), SSD1306_WHITE);
+  display.getTextBounds(informacao, 0, 0, &x1, &y1, &w, &h);
+  display.setCursor((display.width() - w) / 2, (display.height() - h) / 2);
+  display.print(informacao);
+  display.display();
 }
