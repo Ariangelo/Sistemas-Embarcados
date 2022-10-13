@@ -4,7 +4,6 @@ Termômetro com display-OLED conectado no barramento I2C utizando ESP8266
 ------
 <p align="center">
   <img src="../../../Imagens/OKY3078-6.png">
-  <br>
   <img src="../../../Imagens/I2C-Display-Termometro.png" width="500" height="550">
 </p>
 
