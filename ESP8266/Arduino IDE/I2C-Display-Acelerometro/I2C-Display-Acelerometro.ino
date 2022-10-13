@@ -26,10 +26,8 @@ void setup() {
     for (;;)
       ;  // Don't proceed, loop forever
   }
-
   display.setTextSize(1);
   display.setTextColor(WHITE);
-  display.setRotation(0);
 }
 
 void loop() {
