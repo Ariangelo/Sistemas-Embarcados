@@ -6,47 +6,31 @@ Termômetro com display-OLED conectado no barramento I2C utizando ESP8266
   <img src="../../../Imagens/OKY3078-6.png">
 </p>
 
-Foi necessário a utilização da biblioteca [AM2320](https://github.com/adafruit/Adafruit_AM2320 "Biblioteca sensor AM2320 para uso no ESP8266") para configuração do barramento I2C.
+Foi necessário a utilização da biblioteca [AM2320 da Adafruit](https://github.com/adafruit/Adafruit_AM2320 "Biblioteca sensor AM2320 para uso no ESP8266") para configuração do barramento I2C.
 
-* [Download original da biblioteca para o sensor AM2320](https://github.com/hibikiledo/AM2320)
+* [Download original da biblioteca para o sensor AM2320]([https://github.com/hibikiledo/AM2320](https://github.com/adafruit/Adafruit_AM2320))
 
 ```c++
-#include <AM2320.h>
+#include "Adafruit_Sensor.h"
+#include "Adafruit_AM2320.h"
 
-#define SDA_PIN       4
-#define SCL_PIN       5
-
-AM2320 sensor; // Criacao da instancia do sensor
+Adafruit_AM2320 am2320 = Adafruit_AM2320();
 
 void setup() {
   Serial.begin(115200);
-  sensor.begin(SDA_PIN, SCL_PIN);
- 
-  // outros codigos
   
-}  
+  **am2320.begin();**
+  
+  // .. Outros códigos
+}
+
 ```
 Para atualização da leitura dos valores do sensor. 
 ```c++
 void loop() {
-  String infoDisplay;
-  char strDisplay[30];
-  
-  if (sensor.measure()) {
-    temperatura = sensor.getTemperature();
-    umidade = sensor.getHumidity();
-    sprintf(strDisplay, "%.1fºC  -  %.0f%%", temperatura, umidade);
-  } else {
-    int erroSensor = sensor.getErrorCode();
-    switch (erroSensor) {
-      case 1:
-        infoDisplay = "Sensor não conectado";
-        break;
-      case 2:
-        infoDisplay = "Dados do sensor inválido";
-        break;
-    }
-  }
-  Serial.println(infoDisplay); // Imprime informacao formatada na serial
+  Serial.print("Temperatura: "); Serial.println(**am2320.readTemperature()**);
+  Serial.print("Umidade: "); Serial.println(**am2320.readHumidity()**);
+
+  delay(1000);
 }
 ```
