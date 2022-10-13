@@ -6,5 +6,5 @@ Acelerômetro utizando ESP8266
 * Detalhes do sensor **MPU6050** e Esquema de ligação do sensor **MPU6050**
 <p align="center">
   <img src="../../../Imagens/MPU6050_opt.jpg">
-  <img src="../../../Imagens/D1-mini_MCU6050_bb.png">
+  <img src="../../../Imagens/I2C-Display-Acelerometro.png">
 </p>
