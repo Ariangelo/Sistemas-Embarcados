@@ -8,8 +8,7 @@ Termômetro com display-OLED conectado no barramento I2C utizando ESP8266
 
 Foi necessário a utilização da biblioteca [AM2320 da Adafruit](https://github.com/adafruit/Adafruit_AM2320 "Biblioteca sensor AM2320 para uso no ESP8266") para configuração do barramento I2C.
 
-* [Download original da biblioteca para o sensor AM2320]([https://github.com/hibikiledo/AM2320](https://github.com/adafruit/Adafruit_AM2320))
-
+* Para criar uma instância do sensor AM2320
 ```c++
 #include "Adafruit_Sensor.h"
 #include "Adafruit_AM2320.h"
@@ -25,7 +24,7 @@ void setup() {
 }
 
 ```
-Para atualização da leitura dos valores do sensor. 
+* Para atualização da leitura dos valores do sensor. 
 ```c++
 void loop() {
   Serial.print("Temperatura: "); Serial.println(am2320.readTemperature());
