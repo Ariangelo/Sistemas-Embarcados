@@ -4,7 +4,7 @@ Termômetro com display-OLED conectado no barramento I2C utizando ESP8266
 ------
 <p align="center">
   <img src="../../../Imagens/OKY3078-6.png">
-  <img src="../../../Imagens/I2C-Display-Termometro.png">
+  <img src="../../../Imagens/I2C-Display-Termometro.png" width="500" height="550">
 </p>
 
 Foi necessário a utilização da biblioteca [AM2320 da Adafruit](https://github.com/adafruit/Adafruit_AM2320 "Biblioteca sensor AM2320 para uso no ESP8266") para configuração do barramento I2C.
