@@ -1,115 +1,101 @@
-#include <ESP8266WiFi.h>
-#include <SSD1306Wire.h>
 #include <Wire.h>
+#include <Adafruit_SSD1306.h>
 
-#define SDA_PIN       4
-#define SCL_PIN       5
-#define ENDERECO_OLED 0x3C
-#define ENDERECO_MPU  0x68
-#define TAMANHO       GEOMETRY_128_32
-#define TIME_ZONE    -3
+//Endereco I2C do MPU6050
+const int MPU = 0x68;
 
-// WiFi network info.
-const char* ssid = "ssid";
-const char* senha = "senha";
-
-unsigned long contador;    // the debounce time; increase if the output flickers
-unsigned long intervalo = 1000;     // Tempo em ms do intervalo a ser executado
-
-SSD1306Wire display(ENDERECO_OLED, SDA_PIN, SCL_PIN, TAMANHO); // SDA, SCL -> Configuracao do display SSD1306
+Adafruit_SSD1306 display = Adafruit_SSD1306(128, 32, &Wire);
 
 //Variaveis para armazenar valores dos sensores
-int acX, acY, acZ, gyX, gyY, gyZ;
-signed int temp;
+int16_t rawAcX, rawAcY, rawAcZ, Tmp, rawGyX, rawGyY, rawGyZ;
+float acX, acY, acZ, gyroX, gyroY, gyroZ;
 
 void setup() {
-  Wire.begin(SDA_PIN, SCL_PIN);
-  Wire.beginTransmission(ENDERECO_MPU);
+  Serial.begin(115200);
+  Wire.begin();  //21, 22, 400000);
+  Wire.beginTransmission(MPU);
   Wire.write(0x6B);
+
   //Inicializa o MPU-6050
   Wire.write(0);
   Wire.endTransmission(true);
 
-  // Conexao to Wi-Fi
-  display.init();
-  if (lePosicao()) display.flipScreenVertically();
-  display.setTextAlignment(TEXT_ALIGN_CENTER_BOTH);
-  display.setFont(ArialMT_Plain_24);
-  display.drawString(display.getWidth() / 2, display.getHeight() / 2, "Conectando");
-  display.display();
-
-  Serial.begin(115200);
-  Serial.print("Conectando ");
-  Serial.println(ssid);
-  WiFi.begin(ssid, senha);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
+  // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {  // Address 0x3C for 128x32
+    Serial.println(F("SSD1306 allocation failed"));
+    for (;;)
+      ;  // Don't proceed, loop forever
   }
-  // Mostra IP do servidor
-  Serial.println("");
-  Serial.println("WiFi conectado.");
-  Serial.print("Endereço IP: ");
-  Serial.println(WiFi.localIP());
-  Serial.println("Use este endereço para conectar ao ESP8266");
-  Serial.println();
 
-  // Mostra o IP da conexao no display OLED
-  display.clear();
-  display.setFont(ArialMT_Plain_10);
-  display.drawString(display.getWidth() / 2, display.getHeight() / 2, "IP: " + WiFi.localIP().toString());
-  display.display();
-
-  contador = millis();
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setRotation(0);
 }
 
 void loop() {
-  String infoDisplay;
-  char strDisplay[30];
-
-  if (millis() - contador > intervalo) {
-    sprintf(strDisplay, "%.1fºC", lePosicao()); // Formata a saida para ser mostrada no display
-    infoDisplay = strDisplay; // Atualiza o conteudo da informacao para String infoDisplay
-
-    Serial.println(infoDisplay); // Imprime informacao formatada na serial
-
-    display.clear();
-    display.drawRect(0, 0, display.getWidth() - 1, display.getHeight() - 1);
-    display.setTextAlignment(TEXT_ALIGN_CENTER);
-    display.setFont(ArialMT_Plain_16);
-    display.drawString(display.getWidth() / 2, display.getHeight() / 2 - 16, infoDisplay);
-    display.setFont(ArialMT_Plain_10);
-    display.drawString(display.getWidth() / 2, display.getHeight() / 2 + (TAMANHO == GEOMETRY_128_64 ? 5 : 0), "IP: " + WiFi.localIP().toString());
-    display.display();
-
-    contador = millis();
-  }
-}
-
-float lePosicao() {
-  Wire.beginTransmission(ENDERECO_MPU);
-  Wire.write(0x3B);  // inicia com o registro 0x3B (ACCEL_XOUT_H)
+  Wire.beginTransmission(MPU);
+  Wire.write(0x3B);  // starting with register 0x3B (ACCEL_XOUT_H)
   Wire.endTransmission(false);
+
   //Solicita os dados do sensor
-  Wire.requestFrom(ENDERECO_MPU, 14, 1);
+  Wire.requestFrom(MPU, 14, 1);
+
   //Armazena o valor dos sensores nas variaveis correspondentes
-  acX = Wire.read() << 8 | Wire.read(); //0x3B (ACCEL_XOUT_H) & 0x3C (ACCEL_XOUT_L)
-  acY = Wire.read() << 8 | Wire.read(); //0x3D (ACCEL_YOUT_H) & 0x3E (ACCEL_YOUT_L)
-  acZ = Wire.read() << 8 | Wire.read(); //0x3F (ACCEL_ZOUT_H) & 0x40 (ACCEL_ZOUT_L)
-  temp = Wire.read() << 8 | Wire.read(); //0x41 (TEMP_OUT_H) & 0x42 (TEMP_OUT_L)
-  gyX = Wire.read() << 8 | Wire.read(); //0x43 (GYRO_XOUT_H) & 0x44 (GYRO_XOUT_L)
-  gyY = Wire.read() << 8 | Wire.read(); //0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
-  gyZ = Wire.read() << 8 | Wire.read(); //0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
 
-  acX = map(acX, 0, 65535, 0, 200);
-  acY = map(acY, 0, 65535, 0, 200);
-  acZ = map(acZ, 0, 65535, 0, 200);
+  rawAcX = Wire.read() << 8 | Wire.read();  //0x3B (ACCEL_XOUT_H) & 0x3C (ACCEL_XOUT_L)
+  rawAcY = Wire.read() << 8 | Wire.read();  //0x3D (ACCEL_YOUT_H) & 0x3E (ACCEL_YOUT_L)
+  rawAcZ = Wire.read() << 8 | Wire.read();  //0x3F (ACCEL_ZOUT_H) & 0x40 (ACCEL_ZOUT_L)
+  Tmp = Wire.read() << 8 | Wire.read();     //0x41 (TEMP_OUT_H) & 0x42 (TEMP_OUT_L)
+  rawGyX = Wire.read() << 8 | Wire.read();  //0x43 (GYRO_XOUT_H) & 0x44 (GYRO_XOUT_L)
+  rawGyY = Wire.read() << 8 | Wire.read();  //0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
+  rawGyZ = Wire.read() << 8 | Wire.read();  //0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
 
-  temp = temp / 340 + 36.53;
+  acX = ((float)rawAcX) / 16384;
+  acY = ((float)rawAcY) / 16384;
+  acZ = ((float)rawAcZ) / 16384;
 
-  gyX = map(gyX, 0, 65535, 0, 200);
-  gyY = map(gyY, 0, 65535, 0, 200);
-  gyZ = map(gyZ, 0, 65535, 0, 200);
+  gyroX = ((float)rawGyX) / 131;
+  gyroY = ((float)rawGyY) / 131;
+  gyroZ = ((float)rawGyZ) / 131;
 
-  return temp;
+  //Mostra os valores na serial
+  Serial.print("Acel. X = ");
+  Serial.print(acX);
+  Serial.print(" | Y = ");
+  Serial.print(acY);
+  Serial.print(" | Z = ");
+  Serial.print(acZ);
+  Serial.print(" | Gir. X = ");
+  Serial.print(gyroX);
+  Serial.print(" | Y = ");
+  Serial.print(gyroY);
+  Serial.print(" | Z = ");
+  Serial.print(gyroZ);
+  Serial.print(" | Temp = ");
+  Serial.println(Tmp / 340.00 + 36.53);
+
+  display.clearDisplay();
+  display.setRotation(acY > 0 ? 0 : 90);
+  display.setCursor(0, 0);
+
+  display.println("Acelerometro - G");
+  display.print(acX, 2);
+  display.print(", ");
+  display.print(acY, 2);
+  display.print(", ");
+  display.print(acZ, 2);
+  display.println("");
+
+  display.println("Giroscopio - rps");
+  display.print(gyroX, 1);
+  display.print(", ");
+  display.print(gyroY, 1);
+  display.print(", ");
+  display.print(gyroZ, 1);
+  display.println("");
+
+  display.display();
+
+  //Aguarda 300 ms e reinicia o processo
+  delay(300);
 }
