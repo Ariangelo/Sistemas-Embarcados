@@ -1,185 +1,145 @@
-#include <ESP8266WiFi.h>
-#include <WiFiUdp.h>
-#include <NTPClient.h>
-#include <SSD1306Wire.h>
-#include <AM2320.h>
+#include <WiFiManager.h>  // https://github.com/tzapu/WiFiManager
+//para controlar estado do LED
+#include <Ticker.h>
+
+#include <SPI.h>
 #include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include <Fonts/FreeSans9pt7b.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_AM2320.h>
+#include <Adafruit_MPU6050.h>
 
-#define PIN_BOTAO1    0
-#define PIN_FRENTE    12
-#define PIN_TRAZ      13
-#define PIN_ESQUERDA  14
-#define PIN_DIREITA   15
-#define SDA_PIN       4
-#define SCL_PIN       5
+#define OLED_RESET -1
 #define ENDERECO_OLED 0x3C
-#define ENDERECO_MPU  0x68
-#define TAMANHO       GEOMETRY_128_32
-#define TIME_ZONE    -3
+#define DISPLAY_TAMANHO 128
+#define DISPLAY_ALTURA 32
 
-// WiFi network info.
-const char* ssid = "seuSSID";
-const char* senha = "suaSenha";
+#define LED LED_BUILTIN
 
-int statusBotao;
-int statusBotaoAnterior = LOW;
-int leituraBotao;
-unsigned long debounceAnterior = 0;
-unsigned long contador;    
-unsigned long intervalo = 10;     // Tempo em ms do intervalo a ser executado
+Ticker ticker;
+WiFiClient clienteWIFI;
+
+String strMacAddress;
+char macAddress[6];
+
+unsigned long contador;          // Armazena o valor dos milisegundos até o próximo intervalo
+unsigned long intervalo = 1000;  // Tempo em ms do intervalo a ser executado
 float temperatura;
 float umidade;
+sensors_event_t a, g, temp;
 
-WiFiUDP ntpUDP; // Cliente UDP para o NTP
-NTPClient horaCliente(ntpUDP, "pool.ntp.org", TIME_ZONE * 3600, 60000); // Configuracao do Cliente NTP
-SSD1306Wire display(ENDERECO_OLED, SDA_PIN, SCL_PIN, TAMANHO); // SDA, SCL -> Configuracao do display SSD1306
-AM2320 sensor; // Create an instance of sensor
+Adafruit_MPU6050 mpu;
+Adafruit_AM2320 am2320 = Adafruit_AM2320();                                    // Cria uma instancia do sensor AM2320
+Adafruit_SSD1306 display(DISPLAY_TAMANHO, DISPLAY_ALTURA, &Wire, OLED_RESET);  // Configuracao do display SSD1306
 
-bool mudouDirecao, mudouDirecaoAnterior;
-//Variaveis para armazenar valores dos sensores
-int AcX, AcY, AcZ, Tmp, GyX, GyY, GyZ;
+void piscar() {
+  digitalWrite(LED, !digitalRead(LED));
+}
+
+void configuracaoCallback(WiFiManager *gerenciadorWiFi) {
+  Serial.println("Modo de configuração ativado");
+  //Serial.println(WiFi.softAPIP());
+  //Serial.println(gerenciadorWiFi->getConfigPortalSSID());
+  //Modo de configuracao ativado led pisca rapido
+  ticker.attach(0.2, piscar);
+}
 
 void setup() {
-  pinMode(PIN_BOTAO1, INPUT_PULLUP);
-  pinMode(PIN_FRENTE, OUTPUT);
-  pinMode(PIN_TRAZ, OUTPUT);
-  pinMode(PIN_ESQUERDA, OUTPUT);
-  pinMode(PIN_DIREITA, OUTPUT);
-
-  Wire.begin(SDA_PIN, SCL_PIN);
-  Wire.beginTransmission(ENDERECO_MPU);
-  Wire.write(0x6B);
-  //Inicializa o MPU-6050
-  Wire.write(0);
-  Wire.endTransmission(true);
-
-  // Conexao to Wi-Fi
-  display.init();
-  if (lePosicao()) display.flipScreenVertically();
-  display.setTextAlignment(TEXT_ALIGN_CENTER_BOTH);
-  display.setFont(ArialMT_Plain_24);
-  display.drawString(display.getWidth() / 2, display.getHeight() / 2, "Conectando");
-  display.display();
-
   Serial.begin(115200);
-  Serial.print("Conectando ");
-  Serial.println(ssid);
-  WiFi.begin(ssid, senha);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
+  if (!mpu.begin()) {
+    Serial.println("Falha em ativar o sensor MPU6050");
+    while (true) {
+      delay(100);
+    }
+  }
+  if (!display.begin(SSD1306_SWITCHCAPVCC, ENDERECO_OLED)) {
+    Serial.println(F("SSD1306 falhou"));
+    while (true) {
+      delay(100);
+    }
+  }
+  // Mostrar informacao no Display OLED
+  mpu.getEvent(&a, &g, &temp);
+  display.setRotation(a.acceleration.y > 0 ? 0 : 90);
+  centralizaFonte("Conectando");
+  // Mostrar informacao na porta Serial
+  pinMode(0, INPUT);
+  pinMode(LED, OUTPUT);
+  // Forca o modo para STA+AP
+  WiFi.mode(WIFI_STA);
+  ticker.attach(0.6, piscar);
+  //WiFiManager
+  //Depois de configurado a primeira vez o acesso ao WiFi e automatico
+  WiFiManager gerenciadorWiFi;
+  //No caso de revogar o acesso ao WiFi
+  //gerenciador.resetSettings();
+  gerenciadorWiFi.setDebugOutput(false);
+  gerenciadorWiFi.setAPCallback(configuracaoCallback);
+  if (!gerenciadorWiFi.autoConnect("AutoConnectAP")) {
+    Serial.println("Falha na conexão com a WiFi");
+    //reseta o ESP e tenta novamente
+    ESP.restart();
+    delay(1000);
   }
   // Mostra IP do servidor
-  Serial.println("");
+  Serial.println();
   Serial.println("WiFi conectado.");
   Serial.print("Endereço IP: ");
   Serial.println(WiFi.localIP());
-  Serial.println("Use este endereço para conectar ao ESP8266");
+  Serial.println("Use este endereço para conectar ao dispositivo");
   Serial.println();
-
-  // Mostra o IP da conexao no display OLED
-  display.clear();
-  display.setFont(ArialMT_Plain_10);
-  display.drawString(display.getWidth() / 2, display.getHeight() / 2, "IP: " + WiFi.localIP().toString());
-  display.display();
-
-  horaCliente.begin();
-  sensor.begin(SDA_PIN, SCL_PIN);
-  contador = millis();
-
+  strMacAddress = WiFi.macAddress();
+  strMacAddress.toCharArray(macAddress, 6);
+  centralizaNormal("IP: " + WiFi.localIP().toString(), 0.5);
+  contador = millis();  // Inicializa o contador para o intervalo
+  ticker.detach();
+  //Mantem o LED ligado
+  digitalWrite(LED, LOW);
+  am2320.begin();
+  delay(2000);
 }
 
 void loop() {
-  String infoDisplay;
-  char strDisplay[30];
+  char infoDisplay[30];  // Variavel auxiliar para armazenar infoDisplay formatada
+  mpu.getEvent(&a, &g, &temp);
+  display.setRotation(a.acceleration.y > 0 ? 0 : 90);
 
-  mudouDirecao = lePosicao();
-  debounce(PIN_BOTAO1);
   if (millis() - contador > intervalo) {
-    horaCliente.update(); // Atualiza a hora no sistema utilizando o servidor NTP
-    if (sensor.measure()) {
-      temperatura = sensor.getTemperature();
-      umidade = sensor.getHumidity();
-      sprintf(strDisplay, "%.1fºC  -  %.0f%%", temperatura, umidade);
-    } else {
-      int erroSensor = sensor.getErrorCode();
-      switch (erroSensor) {
-        case 1:
-          infoDisplay = "Sensor não conectado";
-          break;
-        case 2:
-          infoDisplay = "Dado sensor inválido";
-          break;
-      }
-    }
-    if (leituraBotao == HIGH) {
-      infoDisplay = horaCliente.getFormattedTime();
-    } else {
-      infoDisplay = strDisplay;
-    }
+    temperatura = am2320.readTemperature();                         // Obtem o valor de temperatura
+    umidade = am2320.readHumidity();                                // Obtem o valor da umidade relativa
+    sprintf(infoDisplay, "%.1f C - %.0f%%", temperatura, umidade);  // Formata a saida para ser mostrada no display
+    Serial.println(infoDisplay);                                    // Imprime informacao formatada na serial
+    centralizaFonte(infoDisplay);                                   // Mostra informacao atualizada da hora no display OLED
+    contador = millis();
   }
-  Serial.println(infoDisplay); // Imprime informacao formatada na serial
-  // Mostra informacao atualizada da hora no display OLED
-  if (mudouDirecao != mudouDirecaoAnterior) {
-    if (mudouDirecao) {
-      display.init();
-      display.flipScreenVertically();
-    } else {
-      display.init();
-    }
-    mudouDirecaoAnterior = mudouDirecao;
-  }
-  display.clear();
-  display.drawRect(0, 0, display.getWidth() - 1, display.getHeight() - 1);
-  display.setTextAlignment(TEXT_ALIGN_CENTER);
-  display.setFont(ArialMT_Plain_16);
-  display.drawString(display.getWidth() / 2, display.getHeight() / 2 - 16, infoDisplay);
-  display.setFont(ArialMT_Plain_10);
-  display.drawString(display.getWidth() / 2, display.getHeight() / 2 + (TAMANHO == GEOMETRY_128_64 ? 5 : 0), "IP: " + WiFi.localIP().toString());
+}
+
+// Procedimentos para mostrar informacao no OLED
+void centralizaFonte(String informacao) {
+  int16_t x1, y1;
+  uint16_t w, h;
+  display.setTextColor(SSD1306_WHITE);
+  display.setFont(&FreeSans9pt7b);
+  display.clearDisplay();
+  display.drawRect(0, 0, display.width(), display.height(), SSD1306_WHITE);
+  display.getTextBounds(informacao, 0, 0, &x1, &y1, &w, &h);
+  display.setCursor((display.width() - w) / 2, display.height() - h + 2);
+  display.print(informacao);
   display.display();
-
-  contador = millis();
-
 }
 
-bool lePosicao() {
-  Wire.beginTransmission(ENDERECO_MPU);
-  Wire.write(0x3B);  // starting with register 0x3B (ACCEL_XOUT_H)
-  Wire.endTransmission(false);
-  //Solicita os dados do sensor
-  Wire.requestFrom(ENDERECO_MPU, 14, 1);
-  //Armazena o valor dos sensores nas variaveis correspondentes
-  AcX = Wire.read() << 8 | Wire.read(); //0x3B (ACCEL_XOUT_H) & 0x3C (ACCEL_XOUT_L)
-  AcY = Wire.read() << 8 | Wire.read(); //0x3D (ACCEL_YOUT_H) & 0x3E (ACCEL_YOUT_L)
-  AcZ = Wire.read() << 8 | Wire.read(); //0x3F (ACCEL_ZOUT_H) & 0x40 (ACCEL_ZOUT_L)
-  Tmp = Wire.read() << 8 | Wire.read(); //0x41 (TEMP_OUT_H) & 0x42 (TEMP_OUT_L)
-  GyX = Wire.read() << 8 | Wire.read(); //0x43 (GYRO_XOUT_H) & 0x44 (GYRO_XOUT_L)
-  GyY = Wire.read() << 8 | Wire.read(); //0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
-  GyZ = Wire.read() << 8 | Wire.read(); //0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
-
-  AcX = map(AcX, 0, 65535, 0, 200);
-  AcY = map(AcY, 0, 65535, 0, 200);
-  AcZ = map(AcZ, 0, 65535, 0, 200);
-
-  GyX = map(GyX, 0, 65535, 0, 200);
-  GyY = map(GyY, 0, 65535, 0, 200);
-  GyZ = map(GyZ, 0, 65535, 0, 200);
-
-  return AcY > 145;
-}
-
-void debounce(int b) {
-  int leitura = digitalRead(b);
-  if (leitura != statusBotaoAnterior) {
-    debounceAnterior = millis();
-  }
-  if ((millis() - debounceAnterior) > 50) {
-    if (leitura != statusBotao) {
-      statusBotao = leitura;
-      if (statusBotao == HIGH) {
-        leituraBotao = !leituraBotao;
-      }
-    }
-  }
-  statusBotaoAnterior = leitura;
+void centralizaNormal(String informacao, uint8_t escala) {
+  int16_t x1, y1;
+  uint16_t w, h;
+  display.setFont();
+  display.cp437(true);
+  display.setTextSize(escala);
+  display.clearDisplay();
+  display.drawRect(0, 0, display.width(), display.height(), SSD1306_WHITE);
+  display.getTextBounds(informacao, 0, 0, &x1, &y1, &w, &h);
+  display.setCursor((display.width() - w) / 2, (display.height() - h) / 2);
+  display.print(informacao);
+  display.display();
 }
