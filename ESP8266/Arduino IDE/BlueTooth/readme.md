@@ -6,7 +6,7 @@ Comunicação Bluetooth WEB utizando ESP8266
 * Na utilização do Módulo Bluetooth (HC-06) devera ser seguido o esquema de ligação apresentado.
 * Detalhes do sensor **HC-05** - Observar que nos pinos TX e RX são conectados os pinos RX e TX do controlador
 <p align="center">
-  <img src="../../../Imagens/I2C-Display-Termometro-Acelerometro-Bluetooth.png" width="100%">
+  <img src="../../../Imagens/I2C-Display-Termometro-Acelerometro-Bluetooth.png" width="80%">
 </p>
 
 Esta documentação irá guiá-lo através de várias classes, métodos e propriedades da biblioteca SoftwareSerial. 
