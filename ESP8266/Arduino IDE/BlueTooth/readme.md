@@ -11,5 +11,5 @@ Comunicação Bluetooth WEB utizando ESP8266
 
 Esta documentação irá guiá-lo através de várias classes, métodos e propriedades da biblioteca SoftwareSerial. 
 * [Configurar módulo HC-06 - Serial Passthrough](Programar_HC-06/Programar_HC-06.ino "Exemplo configurar módulo HC-05")
-* [Utilzação da comunicação Bluetooth no controle de dispositivos](I2C-Display-Acelerometro-inverte-tela-bluetooth/I2C-Display-Acelerometro-inverte-tela-bluetooth.ino "Exemplo de utilização do módulo HC-06")
+* [Utilzação da comunicação Bluetooth no controle de dispositivos](I2C-Display-Acelerometro-inverte-tela-bluetooth/I2C-Display-Acelerometro-inverte-tela-bluetooth.ino "Exemplo de utilização do módulo HC-05")
 
