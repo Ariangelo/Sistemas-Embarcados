@@ -55,5 +55,5 @@ void loop() {
   
   Serial.print("Distance in CM: ");
   Serial.println(distance);
-  delay(1000);
+  delay(200);
 }
