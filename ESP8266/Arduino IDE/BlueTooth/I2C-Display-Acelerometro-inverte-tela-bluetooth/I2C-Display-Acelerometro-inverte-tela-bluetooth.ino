@@ -25,7 +25,6 @@
 Ticker ticker;
 WiFiClient clienteWIFI;
 
-String payloadBT = "";
 String strMacAddress;
 char macAddress[6];
 
@@ -35,7 +34,7 @@ float temperatura;
 float umidade;
 sensors_event_t a, g, temp;
 bool relogio = true;
-
+String payloadBT = "";  
 
 Adafruit_MPU6050 mpu;
 Adafruit_AM2320 am2320 = Adafruit_AM2320();                                    // Cria uma instancia do sensor AM2320
@@ -139,7 +138,12 @@ void loop() {
 void serialBTevent() {
   while (Serial.available()) {
     char payload = (char)Serial.read();
-    relogio = payload == '1';
+    payloadBT += payload;
+    if (payload == '\n') {
+      payloadBT.trim();
+      relogio = payloadBT == "1";
+      payloadBT = "";
+    }
   }
 }
 
