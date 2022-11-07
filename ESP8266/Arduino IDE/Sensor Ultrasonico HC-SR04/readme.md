@@ -44,5 +44,5 @@ void loop() {
 * Detalhes do sensor **HC-SR04** e Esquema de ligação do sensor **HC-SR04**
 <p align="center">
   <img src="../../../Imagens/HC-SR04-Ultrasonic-Sensor.jpg" width="60%">
-  <img src="../../../Imagens/HC-SR04.png" width="60%">
+  <img src="../../../Imagens/HC-SR04.png" width="80%">
 </p>
