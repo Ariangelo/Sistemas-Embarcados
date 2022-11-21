@@ -1,15 +1,14 @@
 
+#define STBY  16  // D0
+#define PWM_A 14  // D5
+#define PWM_B 0   // D3
+#define AI1 13    // D7
+#define AI2 12    // D6
+#define BI1 5     // D1
+#define BI2 4     // D2
+
 #define DIREITO  1
 #define ESQUERDO 2
-
-#define PWM_B  2
-#define PWM_A  0
-#define STBY  16
-#define AI2   15
-#define AI1   13
-#define BI1   12
-#define BI2   14
-
 #define PARAR -1
 #define FRENTE 0
 #define VOLTAR 1
