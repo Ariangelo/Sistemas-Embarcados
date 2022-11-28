@@ -9,6 +9,7 @@ Controle dos motores DC utizando no projeto Andarilho
 
 <p align="center">
   <img src="../../../../Imagens/HC-SR04-Ultrasonic-Sensor.jpg" width="25%">
+  <img src="../../../../Imagens/TB6612FNG.jpg" width="40%">
 </p>
 <p align="center">
   <img src="../../../../Imagens/andarilho (sensor ultrasônico).png" width="100%">
