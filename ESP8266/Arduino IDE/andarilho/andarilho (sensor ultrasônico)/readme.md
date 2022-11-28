@@ -8,7 +8,7 @@ Controle dos motores DC utizando no projeto Andarilho
 * Detalhes do sensor **HC-05** - Observar que nos pinos TX e RX são conectados os pinos RX e TX do controlador
 
 <p align="center">
-  <img src="../../../../Imagens/HC-SR04-Ultrasonic-Sensor.jpg" width="80%">
+  <img src="../../../../Imagens/HC-SR04-Ultrasonic-Sensor.jpg" width="25%">
 </p>
 <p align="center">
   <img src="../../../../Imagens/andarilho (sensor ultrasônico).png" width="100%">
