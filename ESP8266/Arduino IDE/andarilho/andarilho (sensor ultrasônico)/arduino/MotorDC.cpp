@@ -31,14 +31,6 @@ void MotorDC::setSpeed(int speed, bool update) {
     this->speed = speed;
   }
   analogWrite(this->pinSpeed, map(speed, 0, 100, 0, MAX_SPEED_REF));
-  /*
-  Serial.print(getName());
-  Serial.print(" -> ");
-  int teste = map(speed, 0, 100, 0, MAX_SPEED_REF);
-  Serial.print(teste);
-  Serial.print(" : ");
-  Serial.println(getWay());
-*/
 }
 
 int MotorDC::getSpeed() {

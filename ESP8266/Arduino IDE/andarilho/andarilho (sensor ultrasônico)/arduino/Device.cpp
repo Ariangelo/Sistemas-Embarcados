@@ -34,7 +34,6 @@ void Device::setWay(double way) {
 void Device::moveOn(double handling[3]) {
   for (int i = 0; i < this->numMotors; i++) {
     if (handling[2] != 0) {
-      //this->motors[i].setWay(handling[2]);
       setWay(handling[2]);
     }
     this->motors[i].setSpeed(int(handling[i] * this->motors[i].getSpeed()), false);

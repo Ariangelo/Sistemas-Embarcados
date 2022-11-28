@@ -43,6 +43,16 @@ void loop() {
     oldAction = 0;
   }
 
+  if ((int)actions["speed"] != oldSpeed) {
+    andarilho.setSpeed((int)actions["speed"]);
+    oldSpeed = (int)actions["speed"];
+  }
+
+  if ((int)actions["action"] != oldAction) {
+    andarilho.moveOn(listActions[(int)actions["action"] - 1]);
+    oldAction = (int)actions["action"];
+  }
+
 }
 
 void serialBTevent() {

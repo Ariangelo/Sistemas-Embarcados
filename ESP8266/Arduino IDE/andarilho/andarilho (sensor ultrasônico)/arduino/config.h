@@ -12,14 +12,14 @@
 #define BT_NAME "Andarilho"
 #define NUM_MOTORS 2
 
-#define PWM_A 14
-#define PWM_B 0
-#define AI1 13
-#define AI2 12
-#define BI1 5
-#define BI2 4
-#define TRIGGER_PIN 2
-#define ECHO_PIN 15
+#define PWM_A 14      // D5
+#define PWM_B 0       // D3
+#define AI1 13        // D7
+#define AI2 12        // D6
+#define BI1 5         // D1
+#define BI2 4         // D2
+#define TRIGGER_PIN 2 // D4
+#define ECHO_PIN 15   // D8
 
 enum Source {
   BT,
