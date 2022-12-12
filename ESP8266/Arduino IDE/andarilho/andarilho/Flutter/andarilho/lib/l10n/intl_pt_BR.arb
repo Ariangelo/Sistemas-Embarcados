@@ -1,0 +1,38 @@
+{
+  "@@locale" : "pt_BR",
+  "title":"Andarilho",
+
+  "controls_label": "Controles",
+  "controls_title": "Controles do Robô",
+  "controls_voice_label": "Resposta por Voz",
+
+  "mqtt_label": "MQTT",
+  "mqtt_title": "Configuração MQTT",
+  "mqtt_server_labelText": "Servidor",
+  "mqtt_port_labelText": "Porta",
+  "mqtt_client_labelText": "Cliente",
+  "mqtt_topic_labelText": "Tópico",
+  "mqtt_btnConnect_label": "Conectar",
+  "mqtt_btnDisconnect_label": "Desconectar",
+
+  "bluetooth_label": "Bluetooth",
+  "bluetooth_title": "Configuração Bluetooth",
+  "handshake_message": "Conectado ao dispositivo",
+  "handshake_error": "Erro ao conectar com o dispositivo",
+  "handshake_disconnect": "Desconectado do dispositivo",
+  "enable_bluetooth_label": "Habilitar Bluetooth",
+  "config_bluetooth_label": "Configurar Bluetooth",
+  "list_bluetooth_label": "Dispositivos",
+  "paired_label": "pareados",
+
+  "voice_label": "Voz",
+  "voice_title": "Controle por Voz",
+  "voice_start_message": "Pressione para ativar o controle por voz",
+  "voice_exit_message": "Finalizar utilização do controle por voz",
+  "voice_receiving_message": "Recebendo o comando",
+  "voice_waiting_message": "Aguardando o comando",
+  "voice_recognition_failed": "Falha no reconhecimento de voz",
+
+  "warning_conection_message": "É necessário uma conexão MQTT ou Bluetooth",
+  "exit_message": "Pressione o botão Voltar novamente para sair"
+}

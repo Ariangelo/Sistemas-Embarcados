@@ -1,0 +1,38 @@
+{
+  "@@locale" : "en_US",
+  "title":"Andarilho",
+
+  "controls_label": "Controls",
+  "controls_title": "Robot controls",
+  "controls_voice_label": "Voice answer",
+
+  "mqtt_label": "MQTT",
+  "mqtt_title": "MQTT Configuration",
+  "mqtt_server_labelText": "Server",
+  "mqtt_port_labelText": "Port",
+  "mqtt_client_labelText": "Client",
+  "mqtt_topic_labelText": "Topic",
+  "mqtt_btnConnect_label": "Connect",
+  "mqtt_btnDisconnect_label": "Disconnect",
+
+  "bluetooth_label": "Bluetooth",
+  "bluetooth_title": "Bluetooth Configuration",
+  "handshake_message": "Conneceted to device",
+  "handshake_error": "Error to connect with device",
+  "handshake_disconnect": "Disconnected from device",
+  "enable_bluetooth_label": "Enable Bluetooth",
+  "config_bluetooth_label": "Config Bluetooth",
+  "list_bluetooth_label": "Devices",
+  "paired_label": "paired",
+
+  "voice_label": "Voice",
+  "voice_title": "Voice control",
+  "voice_start_message": "Press to activate voice control",
+  "voice_exit_message": "End using voice control",
+  "voice_receiving_message": "Getting the command",
+  "voice_waiting_message": "Waiting the command",
+  "voice_recognition_failed": "Speech recognition failed",
+
+  "warning_conection_message": "MQTT or Bluetooth connection is required",
+  "exit_message": "Press the back button again to exit"
+}
