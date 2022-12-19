@@ -1,0 +1,85 @@
+device:
+  init: Olá, meu nome é Java! Por favor, pressione o microfone, e depois informe o comando para o robô.
+  invalid: Desculpe, mas não foi possível executar este comando.
+  warning: Desculpe, mas é necessário informar o nome do robô para executar um comando!
+  name:
+    - java
+    - robô
+    - robo
+exit:
+  speech: Finalizando a utilização. Java fica feliz em ser útil.
+  control:
+    - desligar
+    - dormir
+    - sair
+speed:
+  slow:
+    speech: Diminuindo a velocidade
+    warning: Você já está na velocidade mínima
+    control:
+      - diminuir
+      - devagar
+    value: -10
+  quick:
+    speech: Aumentando a velocidade
+    warning: Você já está na velocidade máxima
+    control:
+      - aumentar
+      - rápido
+      - rapido
+    value: 10
+command:
+  north:
+    speech: Seguindo em frente
+    control:
+      - ir
+      - frente
+      - seguir
+    value: 1
+  west :
+    speech: Virando a esquerda
+    control:
+      - esquerda
+    value: 2
+  stop:
+    speech: Parando o robô
+    control:
+      - parar
+      - pare
+      - frear
+      - freie
+      - estacionar
+      - estacione
+    value: 3
+  east :
+    speech: Virando a direita
+    control:
+      - direita
+    value: 4
+  south :
+    speech: Seguindo para trás
+    control:
+      - voltar
+      - volte
+      - ré
+    value: 5
+  northwest :
+    speech: Seguindo em frente e virando um pouco a esquerda
+    control:
+      - noroeste
+    value: 6
+  northeast :
+    speech: Seguindo em frente e virando um pouco a direita
+    control:
+      - nordeste
+    value: 7
+  southwest  :
+    speech: Seguindo para trás e virando um pouco a esquerda
+    control:
+      - sudoeste
+    value: 8
+  southeast   :
+    speech: Seguindo para trás e virando um pouco a direita
+    control:
+      - sudeste
+    value: 9
