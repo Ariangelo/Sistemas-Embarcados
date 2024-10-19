@@ -7,7 +7,7 @@
 #include <Arduino_JSON.h>
 #include <Ticker.h>  //para controlar estado do LED
 #include <Ultrasonic.h>
-
+/*
 #ifdef ESP32
 #include <BluetoothSerial.h>
 #else
@@ -17,6 +17,7 @@
 #if defined(ESP32) && (!defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED))
 #error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
 #endif
+*/
 
 #ifndef LED_BUILTIN
 #define LED_BUILTIN 22  // ESP32 DOES NOT DEFINE LED_BUILTIN

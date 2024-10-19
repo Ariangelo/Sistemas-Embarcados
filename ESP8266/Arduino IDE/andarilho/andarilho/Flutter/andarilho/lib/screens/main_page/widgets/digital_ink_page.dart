@@ -20,7 +20,9 @@ class DigitalInkPageState extends State<DigitalInkPage> {
         child: Container(
             margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            decoration: BoxDecoration(border: Border.all(), borderRadius: const BorderRadius.all(Radius.circular(10))),
+            decoration: BoxDecoration(
+                border: Border.all(),
+                borderRadius: const BorderRadius.all(Radius.circular(10))),
             child: DigitalInkView(mainPage: widget.mainPage)));
   }
 }
@@ -35,9 +37,11 @@ class DigitalInkView extends StatefulWidget {
 
 class _DigitalInkViewState extends State<DigitalInkView> {
   final ProcessSpeechCommand processSpeechCommand = ProcessSpeechCommand();
-  final DigitalInkRecognizerModelManager modelManager = DigitalInkRecognizerModelManager();
+  final DigitalInkRecognizerModelManager modelManager =
+      DigitalInkRecognizerModelManager();
   final String language = 'pt-BR';
-  late final DigitalInkRecognizer digitalInkRecognizer = DigitalInkRecognizer(languageCode: language);
+  late final DigitalInkRecognizer digitalInkRecognizer =
+      DigitalInkRecognizer(languageCode: language);
   final Ink ink = Ink();
   List<StrokePoint> points = [];
   String recognizedText = '';
@@ -47,7 +51,9 @@ class _DigitalInkViewState extends State<DigitalInkView> {
     super.initState();
     modelManager.isModelDownloaded(language).then(
           (value) => !value
-              ? modelManager.downloadModel(language).then((value) => value ? 'success' : 'failed')
+              ? modelManager
+                  .downloadModel(language)
+                  .then((value) => value ? 'success' : 'failed')
               : print('not downloaded'),
         );
   }
@@ -98,7 +104,8 @@ class _DigitalInkViewState extends State<DigitalInkView> {
           onPanUpdate: (DragUpdateDetails details) {
             setState(() {
               final RenderObject? object = context.findRenderObject();
-              final localPosition = (object as RenderBox?)?.globalToLocal(details.globalPosition);
+              final localPosition =
+                  (object as RenderBox?)?.globalToLocal(details.globalPosition);
               if (localPosition != null) {
                 points = List.from(points)
                   ..add(StrokePoint(
@@ -159,7 +166,8 @@ class Signature extends CustomPainter {
       for (int i = 0; i < stroke.points.length - 1; i++) {
         final p1 = stroke.points[i];
         final p2 = stroke.points[i + 1];
-        canvas.drawLine(Offset(p1.x.toDouble(), p1.y.toDouble()), Offset(p2.x.toDouble(), p2.y.toDouble()), paint);
+        canvas.drawLine(Offset(p1.x.toDouble(), p1.y.toDouble()),
+            Offset(p2.x.toDouble(), p2.y.toDouble()), paint);
       }
     }
   }

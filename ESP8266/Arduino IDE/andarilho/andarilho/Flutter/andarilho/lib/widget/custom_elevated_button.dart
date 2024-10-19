@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomElevatedButton extends StatelessWidget {
   EdgeInsetsGeometry? padding;
   String label;
@@ -27,7 +28,10 @@ class CustomElevatedButton extends StatelessWidget {
         child: ElevatedButton.icon(
           label: Text(label),
           icon: icon,
-          style: ElevatedButton.styleFrom(elevation: 5, backgroundColor: color, padding: const EdgeInsets.all(15)),
+          style: ElevatedButton.styleFrom(
+              elevation: 5,
+              backgroundColor: color,
+              padding: const EdgeInsets.all(15)),
           onPressed: onPressed,
         ));
   }
